@@ -3,7 +3,9 @@ economy-plugins
 
       DEVELOPERS
 	
-	miner & Omattyao
++miner
+
++Omattyao
 
 ======================
 ======================
