@@ -3,9 +3,9 @@ economy-plugins
 
       DEVELOPERS
 	
-+miner
+__miner__
 
-+Omattyao
+__Omattyao__
 
 ======================
 ======================
