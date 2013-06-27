@@ -10,7 +10,7 @@ economy-plugins
 ======================
 ======================
    
-  Developer info
+__Developer info__
 
       miner
       
@@ -18,7 +18,7 @@ economy-plugins
 
 
 
-Availible Language
+__Availible Language__
 
 
 =Objective C
@@ -27,15 +27,15 @@ Availible Language
 =little bit of C/C+
 
 
-About me...
+__About me...__
 
 
 I have a lot of ideas and creativity. I like to try new things!
 But one thing I don't like : people who don't respect copyrighs!!!
 
 ======================
-	
-  Developer info
+
+__Developer info__
 
       Omattyao
 				
