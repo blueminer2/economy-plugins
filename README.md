@@ -35,7 +35,7 @@ But one thing I don't like : people who don't respect copyrighs!!!
 
 ======================
 	
-	Developer info
+  Developer info
 
       Omattyao
 				
