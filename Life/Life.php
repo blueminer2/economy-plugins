@@ -34,6 +34,7 @@ class ExamplePlugin implements Plugin{
 			}
 				break;
 		}
+		return $output;
 	}
 
 }
