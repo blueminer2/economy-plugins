@@ -2,7 +2,7 @@
 
 /*
 __PocketMine Plugin__
-name=bank
+name=bank(beta)
 version=0.0.1
 author=miner&omattyao
 class=bank
@@ -90,6 +90,31 @@ class ExamplePlugin implements Plugin{
 						}
 						$bankMoney += $amount;
 						$playerMoney -= $amount;
+						$this->api->dhandle("money.handle", array(
+										'username' => $playerBank,
+										'method' => 'grant',
+										'amount' => -$amount
+								));
+						$result = array(
+								$playerBank => array(
+										'bank' => $bankMoney
+								),
+								);
+						$this->overwriteConfig($result);
+						$output .= "[Bank]You have deposited to your bank acount safely";
+						break;
+					case "withdraw":
+						$playerBank = $issuer->username;
+						$amount = $args[2];
+						$bankMoney = $cfg[$playerBank]['bank'];
+						$playerMoney = $this->api->dhandle("money.player.get", array('username' => $username));
+						if(!is_numeric($amount) or $amount < 0 or $bankMoney < $amount)
+						{
+							$output .= "[Bank]check your money / check your input number / check your spelling";
+							break;
+						}
+						$bankMoney -= $amount;
+						$playerMoney += $amount;
 						$this->api->dhandle("money.handle", array(
 										'username' => $playerBank,
 										'method' => 'grant',
