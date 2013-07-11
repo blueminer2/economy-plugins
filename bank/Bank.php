@@ -134,4 +134,11 @@ class ExamplePlugin implements Plugin{
 		return $output;
 	}
 
+	private function overwriteConfig($dat)
+	{
+		$cfg = array();
+		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
+		$result = array_merge($cfg, $dat);
+		$this->api->plugin->writeYAML($this->path."config.yml", $result);
+	}
 }
