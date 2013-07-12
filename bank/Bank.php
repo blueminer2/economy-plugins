@@ -59,7 +59,7 @@ class ExamplePlugin implements Plugin{
 			case "bank":
 			if (!($issuer instanceof Player))
 			{
-				$output .= "Please use this command in game.\n"
+				$output .= "Please use this command in game.\n";
 				break;
 			}
 			$subCommand = $args[0];
