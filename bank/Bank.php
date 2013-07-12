@@ -133,7 +133,7 @@ class ExamplePlugin implements Plugin{
 								),
 								);
 						$this->overwriteConfig($result);
-						$output .= "[Bank]You have withdrown to your bank acount safely\n";
+						$output .= "[Bank]You have withdrawn to your bank acount safely\n";
 						break;
 				}
 			break;
