@@ -153,20 +153,46 @@ class bank implements Plugin{
 						$loanAmount = $args[1];
 						$playerBank = $issuer->username;
 						$bankMoney = $cfg[$playerBank]['bank'];
-						if(!is_numeric($loanAmount) or $loanAmount <= 0 or $loanAmount >= 3000)
+						$loans = $cfg[$playerBank]['loans'];
+						if(!is_numeric($loanAmount) or $loanAmount <= 0 or $loanAmount >= 3000 or $loans > 0)
 						{
 							$output .= "[Bank]check your loan amount / check your input number / check your spelling\n";
 							$output .= "[Bank]make sure that your loan amount is smaller than 3000\n";
+							$output .= "[Bank]make sure that you don't have any lonas!!\n";
 						}
 						$bankMoney += $loanAmount;
 						$result = array(
 								$playerBank => array(
 										'bank'=> $bankMoney, 
 										'loans' => $loanAmount
-										),
-										);
+								),
+						);
 						$this->overwriteConfig($result);
 						$output .= "[Bank]You have taken your loan from the bank... please return it\n";
+						break;
+					case "payloan":
+						if($issuer == $cmd)
+						{
+							$output .= "[Bank]Please run this command in game\n";
+						}
+						$payAmount = $args[1];
+						$playerBank = $issuer->username;
+						$bankMoney = $cfg[$playerBank]['bank'];
+						$loans = $cfg[$playerBank]['loans'];
+						$totalLoans = $loans -= $payAmount;
+						if(!is_numeric($payAmount) or $bankMoney <= 0 or $bankMoney < $payAmount or $loans < $payAmount)
+						{
+							$output .= "[Bank]check your bank money / check your imput number / check your spelling\n";
+						}
+						$bankMoney -= $payAmount;
+						$result = array(
+								$playerBank => array(
+										'bank' => $bankMoney, 
+										'loans' => $totalLoans
+								),
+						);
+						$this->overwriteConfig($result);
+						$output .= "[Bank]Paid back your loan... come back again!!\n";
 				}
 			break;
 		}
