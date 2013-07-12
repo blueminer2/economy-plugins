@@ -10,8 +10,9 @@ apiversion=9
 */
 
 define("DEFAULT_ASSETS", 100);
+define("DEFAULT_LOANS", 0);
 
-class ExamplePlugin implements Plugin{
+class bank implements Plugin{
 	private $api;
 	public function __construct(ServerAPI $api, $server = false){
 		$this->api = $api;
@@ -45,7 +46,8 @@ class ExamplePlugin implements Plugin{
 				{
 					$this->api->plugin->createConfig($this,array(
 							$target => array(
-									'bank' => DEFAULT_ASSETS
+									'bank' => DEFAULT_ASSETS, 
+									'loans' => DEFAULT_LOANS
 							)
 					));
 					$this->api->chat->broadcast("[Bank]$target has been registered.");
@@ -86,7 +88,11 @@ class ExamplePlugin implements Plugin{
 						$output .= "[Bank]You have $money in your bank account\n";
 						break;
 					case "deposite":
-						$playerBank = $username;
+						if($issuer == $cmd)
+						{
+							$output .= "[Bank]Please run this command in game\n";
+						}
+						$playerBank = $issuer->username;
 						$amount = $args[1];
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$playerMoney = $this->api->dhandle("money.player.get", array('username' => $username));
@@ -111,7 +117,11 @@ class ExamplePlugin implements Plugin{
 						$output .= "[Bank]You have deposited to your bank acount safely\n";
 						break;
 					case "withdraw":
-						$playerBank = $username;
+						if($issuer == $cmd)
+						{
+							$output .= "[Bank]Please run this command in game\n";
+						}
+						$playerBank = $issuer->username;
 						$amount = $args[1];
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$playerMoney = $this->api->dhandle("money.player.get", array('username' => $username));
@@ -135,6 +145,28 @@ class ExamplePlugin implements Plugin{
 						$this->overwriteConfig($result);
 						$output .= "[Bank]You have withdrawn to your bank acount safely\n";
 						break;
+					case "loan":
+						if($issuer == $cmd)
+						{
+							$output .= "[Bank]Please run this command in game\n";
+						}
+						$loanAmount = $args[1];
+						$playerBank = $issuer->username;
+						$bankMoney = $cfg[$playerBank]['bank'];
+						if(!is_numeric($loanAmount) or $loanAmount <= 0 or $loanAmount >= 3000)
+						{
+							$output .= "[Bank]check your loan amount / check your input number / check your spelling\n";
+							$output .= "[Bank]make sure that your loan amount is smaller than 3000\n";
+						}
+						$bankMoney += $loanAmount;
+						$result = array(
+								$playerBank => array(
+										'bank'=> $bankMoney, 
+										'loans' => $loanAmount
+										),
+										);
+						$this->overwriteConfig($result);
+						$output .= "[Bank]You have taken your loan from the bank... please return it\n";
 				}
 			break;
 		}
