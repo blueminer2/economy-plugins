@@ -59,7 +59,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(30000))
 			{
 				$growth = 3;
-				$age2 = array(
+				$age3 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -69,7 +69,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(40000))
 			{
 				$growth = 4;
-				$age2 = array(
+				$age4 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -79,7 +79,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(50000))
 			{
 				$growth = 5;
-				$age2 = array(
+				$age5 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -89,7 +89,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(60000))
 			{
 				$growth = 6;
-				$age2 = array(
+				$age6 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -99,7 +99,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(70000))
 			{
 				$growth = 7;
-				$age2 = array(
+				$age7 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -109,7 +109,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(80000))
 			{
 				$growth = 8;
-				$age2 = array(
+				$age8 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -119,7 +119,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(90000))
 			{
 				$growth = 9;
-				$age2 = array(
+				$age9 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -129,7 +129,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(100000))
 			{
 				$growth = 10;
-				$age2 = array(
+				$age10 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -139,7 +139,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(140000))
 			{
 				$growth = 15;
-				$age2 = array(
+				$age15 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -149,7 +149,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(170000))
 			{
 				$growth = 20;
-				$age2 = array(
+				$age20 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -159,7 +159,7 @@ class ExamplePlugin implements Plugin{
 			if($this->api->time->get(220000))
 			{
 				$growth = 30;
-				$age2 = array(
+				$age30 = array(
 						$players => array(
 								'age' => $growth
 								)
@@ -183,7 +183,6 @@ class ExamplePlugin implements Plugin{
 					$output .= "==[ ::Showing the Commands of {Life} Plugin:: ]==";
 					$output .= "[Life]/life age ++Shows How Old You Are++";
 					$output .= "[Life]/life job ++Shows the availible jobs you can get for your age++";
-					$output .= "";
 					break;
 					case "age":
 					if(!array_key_exists($issuer->username, $cfg))
@@ -191,13 +190,71 @@ class ExamplePlugin implements Plugin{
 							$output .= "[Life]You are not a villager.";
 							break;
 						}
-						$money = $cfg[$issuer->username]['age'];
-						$output .= "[Life]$money years old";
+						$age = $cfg[$issuer->username]['age'];
+						$output .= "[Life]$age years old";
+						break;
+					case "jobs":
+					$playername = $issuer->username;
+					$jobs = $args[1];
+					if(!file_exists("./plugins/Pocketjobs/config.yml") or !file_exists("./plugins/Pocketjobs/joblist.yml") or !file_exists("./plugins/Pocketjobs/playerlist.yml"))
+					{
+						$output .= "[Life]You don't have Pocketjobs loaded";
+					}
+					$page = $cfg[$playername]['age'];
+					if($page <= 15)
+					{
+						$output .= "[Life]You are too young to get a job!!";
+					}
+					if($issuer === "console"){
+							console("[PocketJobs]Must be run on the world.");
+							break;
+						}
+					if(!isset($args[2])){
+							$output .= "Usage: /jobs join <jobname>\n";
+							break;
+						}
+						$jobname = strtolower($args[2]);
+						$jobExist = false;
+						foreach($this->api->plugin->readYAML("./plugins/Pocketjobs/joblist.yml")->getAll(true) as $job){
+							if(strtolower($job) === $jobname){
+								$jobExist = true;
+							}
+						}
+						if(!$jobExist){
+							$output .= "[Life]$args[2] not found.";
+							break;
+						}
+						$output .= $this->joinJob($issuer->username, $jobname);
 						break;
 					break;
 				}
 		}
 		return $output;
+	}
+	
+		private function joinJob($username, $jobname)
+	{
+		$jobname = strtolower($jobname);
+		$cfg2 = $this->api->plugin->readYAML("./plugins/Pocketjobs/playerlist.yml")->get($username);
+		if(isset($cfg['slot1'])){
+			if(isset($cfg['slot2'])){
+				return "[PocketJobs]Your job slot is full.\n";
+			}else{
+				$this->api->plugin->readYAML("./plugins/Pocketjobs/playerlist.yml")->set($username, array(
+						'slot1' => $cfg['slot1'],
+						'slot2' => $jobname
+				));
+				$this->api->plugin->readYAML("./plugins/Pocketjobs/playerlist.yml")->save();				
+				return "[PocketJobs]Set $jobname to your job slot2.\n";
+			}
+		}else{
+			$this->api->plugin->readYAML("./plugins/Pocketjobs/playerlist.yml")->set($username, array(
+					'slot1' => $jobname,
+					'slot2' => $cfg['slot2']
+			));
+			$this->api->plugin->readYAML("./plugins/Pocketjobs/playerlist.yml")->save();
+			return "[PocketJobs]Set $jobname to your job slot1.\n";
+		}
 	}
 
 	private function overwriteConfig($dat)
