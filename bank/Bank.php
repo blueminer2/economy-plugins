@@ -3,7 +3,7 @@
 /*
 __PocketMine Plugin__
 name=bank
-version=0.0.1
+version=0.0.2
 author=miner&omattyao
 class=bank
 apiversion=9
@@ -21,6 +21,7 @@ class bank implements Plugin{
 	public function init(){
 		$this->api->addHandler("player.join", array($this, "eventHandler"));
 		$this->api->console->register("bank", "bank commands", array($this, "handleCommand"));
+		$this->api->ban->cmdWhitelist("bank");
 		$this->path = $this->api->plugin->createConfig($this, array());
 		/*
 		
@@ -50,7 +51,7 @@ class bank implements Plugin{
 									'loans' => DEFAULT_LOANS
 							)
 					));
-					$this->api->chat->broadcast("[Bank]$target has been registered.");
+					$this->api->chat->broadcast("[Bank]$target has registered to the bank.");
 				}
 		}
 	}
@@ -61,7 +62,7 @@ class bank implements Plugin{
 			case "bank":
 			if (!($issuer instanceof Player))
 			{
-				$output .= "Please use this command in game.\n";
+				$output .= "Please use this command in the game.\n";
 				break;
 			}
 			$subCommand = $args[0];
@@ -71,9 +72,12 @@ class bank implements Plugin{
 					case "help":
 					case "":
 					  $output .= "===[Bank :: Commands]===\n";
+					  $output .= "===[For more informaiton use help2]==\n";
 					  $output .= "[Bank]/bank :: shows commands\n";
 					  $output .= "[Bank]/bank deposite (amount) :: put in your pocketmoney into the bank\n";
 					  $output .= "[Bank]/bank withdraw (amount) :: take out your pocketmoney from the bank\n";
+					  	break;
+					 case "help2":
 					  $output .= "[Bank]/bank loan (amount) :: get a loan from the bank\n";
 					  $output .= "[Bank]/bank payloan (amount) :: return your loan to the bank\n";
 					  $output .= "[Bank]/bank money :: shows your bank total assets\n";
