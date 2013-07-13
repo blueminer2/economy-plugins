@@ -16,6 +16,7 @@ class ExamplePlugin implements Plugin{
 	}
 	
 	public function init(){
+		$this->api->ban->cmdWhitelist("bank");
 		$this->api->console->register("cs", "command shop gives you access to the admin shop anywhere / anytime you want", array($this, "handleCommand"));
 		$this->path = $this->api->plugin->createConfig($this, array(
 				"air" => 0,
