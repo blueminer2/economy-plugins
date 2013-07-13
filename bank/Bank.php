@@ -2,7 +2,7 @@
 
 /*
 __PocketMine Plugin__
-name=bank(beta)
+name=bank
 version=0.0.1
 author=miner&omattyao
 class=bank
@@ -68,7 +68,8 @@ class bank implements Plugin{
 			$username = $issuer->username;
 			$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 				switch($subCommand){
-					case "";
+					case "help":
+					case "":
 					  $output .= "===[Bank :: Commands]===\n";
 					  $output .= "[Bank]/bank :: shows commands\n";
 					  $output .= "[Bank]/bank deposite (amount) :: put in your pocketmoney into the bank\n";
