@@ -115,7 +115,7 @@ class bank implements Plugin{
 								),
 								);
 						$this->overwriteConfig($result);
-						$output .= "[Bank]You have deposited to your bank acount safely: ."$amount."\n";
+						$output .= "[Bank]You have deposited to your bank acount safely: ".$amount."\n";
 						break;
 					case "withdraw":
 						$playerBank = $username;
