@@ -89,15 +89,11 @@ class bank implements Plugin{
 							$output .= "[Bank]You don't have a bank account\n";
 							break;
 						}
-						$money = $cfg[$issuer->username]['bank'];
+						$money = $cfg[$username]['bank'];
 						$output .= "[Bank]You have $money in your bank account\n";
 						break;
 					case "deposite":
-						if($issuer == $cmd)
-						{
-							$output .= "[Bank]Please run this command in game\n";
-						}
-						$playerBank = $issuer->username;
+						$playerBank = $username;
 						$amount = $args[1];
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$playerMoney = $this->api->dhandle("money.player.get", array('username' => $username));
@@ -119,14 +115,10 @@ class bank implements Plugin{
 								),
 								);
 						$this->overwriteConfig($result);
-						$output .= "[Bank]You have deposited to your bank acount safely\n";
+						$output .= "[Bank]You have deposited to your bank acount safely: ."$amount."\n";
 						break;
 					case "withdraw":
-						if($issuer == $cmd)
-						{
-							$output .= "[Bank]Please run this command in game\n";
-						}
-						$playerBank = $issuer->username;
+						$playerBank = $username;
 						$amount = $args[1];
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$playerMoney = $this->api->dhandle("money.player.get", array('username' => $username));
@@ -148,15 +140,11 @@ class bank implements Plugin{
 								),
 								);
 						$this->overwriteConfig($result);
-						$output .= "[Bank]You have withdrawn to your bank acount safely\n";
+						$output .= "[Bank]You have withdrawn to your bank acount safely: ".$amount."\n";
 						break;
 					case "loan":
-						if($issuer == $cmd)
-						{
-							$output .= "[Bank]Please run this command in game\n";
-						}
 						$loanAmount = $args[1];
-						$playerBank = $issuer->username;
+						$playerBank = $username;
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$loans = $cfg[$playerBank]['loans'];
 						if(!is_numeric($loanAmount) or $loanAmount <= 0 or $loanAmount >= 3000 or $loans > 0)
@@ -164,6 +152,7 @@ class bank implements Plugin{
 							$output .= "[Bank]check your loan amount / check your input number / check your spelling\n";
 							$output .= "[Bank]make sure that your loan amount is smaller than 3000\n";
 							$output .= "[Bank]make sure that you don't have any lonas!!\n";
+							break;
 						}
 						$bankMoney += $loanAmount;
 						$result = array(
@@ -176,19 +165,16 @@ class bank implements Plugin{
 						$output .= "[Bank]You have taken your loan from the bank... please return it\n";
 						break;
 					case "payloan":
-						if($issuer == $cmd)
-						{
-							$output .= "[Bank]Please run this command in game\n";
-						}
 						$payAmount = $args[1];
-						$playerBank = $issuer->username;
+						$playerBank = $username;
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$loans = $cfg[$playerBank]['loans'];
-						$totalLoans = $loans -= $payAmount;
-						if(!is_numeric($payAmount) or $bankMoney <= 0 or $bankMoney < $payAmount or $loans < $payAmount)
+						if(!is_numeric($payAmount) or $payAmount <= 0 or $bankMoney < $payAmount or $loans > $payAmount)
 						{
 							$output .= "[Bank]check your bank money / check your imput number / check your spelling\n";
+							break;
 						}
+						$totalLoans = $loans - $payAmount;
 						$bankMoney -= $payAmount;
 						$result = array(
 								$playerBank => array(
