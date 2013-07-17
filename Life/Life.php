@@ -11,7 +11,7 @@ apiversion=9
 
 define("DEFAULT_AGE", 1);
 
-class Life implements Plugin{
+class ExamplePlugin implements Plugin{
 	private $api;
 	public function __construct(ServerAPI $api, $server = false){
 		$this->api = $api;
