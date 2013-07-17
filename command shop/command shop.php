@@ -257,7 +257,6 @@ class ExamplePlugin implements Plugin{
 				}
 			break;
 		}
-		return $output;
 	}
 	public function blockcodes (){
 	$blocks = array(
@@ -446,5 +445,13 @@ class ExamplePlugin implements Plugin{
 			405 => "netherbrick",
 			456 => "camera"
 	);
+	}
+	
+	private function overwriteConfig($dat)
+	{
+		$cfg = array();
+		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
+		$result = array_merge($cfg, $dat);
+		$this->api->plugin->writeYAML($this->path."config.yml", $result);
 	}
 }
