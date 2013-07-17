@@ -56,7 +56,7 @@ class bank implements Plugin{
 		}
 	}
 	
-	public function handleCommand($cmd, $arg, $issuer, $alias){
+	public function handleCommand($cmd, $args, $issuer, $alias){
 		$output = "";
 		switch($cmd){
 			case "bank":
@@ -65,7 +65,7 @@ class bank implements Plugin{
 				$output .= "Please use this command in the game.\n";
 				break;
 			}
-			$subCommand = $args[0];
+			$subCommand = strtolower(array_shift($args));
 			$username = $issuer->username;
 			$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 				switch($subCommand){
@@ -94,7 +94,7 @@ class bank implements Plugin{
 						break;
 					case "deposite":
 						$playerBank = $username;
-						$amount = $args[1];
+						$amount = array_shift($args);
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$playerMoney = $this->api->dhandle("money.player.get", array('username' => $username));
 						if(!is_numeric($amount) or $amount <= 0 or $playerMoney < $amount)
@@ -119,7 +119,7 @@ class bank implements Plugin{
 						break;
 					case "withdraw":
 						$playerBank = $username;
-						$amount = $args[1];
+						$amount = array_shift($args);
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$playerMoney = $this->api->dhandle("money.player.get", array('username' => $username));
 						if(!is_numeric($amount) or $amount <= 0 or $bankMoney < $amount)
@@ -143,7 +143,7 @@ class bank implements Plugin{
 						$output .= "[Bank]You have withdrawn to your bank acount safely: ".$amount."\n";
 						break;
 					case "loan":
-						$loanAmount = $args[1];
+						$loanAmount = array_shift($args);
 						$playerBank = $username;
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$loans = $cfg[$playerBank]['loans'];
@@ -165,7 +165,7 @@ class bank implements Plugin{
 						$output .= "[Bank]You have taken your loan from the bank... please return it\n";
 						break;
 					case "payloan":
-						$payAmount = $args[1];
+						$payAmount = array_shift($args);
 						$playerBank = $username;
 						$bankMoney = $cfg[$playerBank]['bank'];
 						$loans = $cfg[$playerBank]['loans'];
