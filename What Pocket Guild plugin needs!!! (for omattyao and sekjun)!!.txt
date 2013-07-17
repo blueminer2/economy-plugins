@@ -1,0 +1,10 @@
+for this plugin... I need a feature that gives you more maximum health
+everytime a player joins a guild which means if there is 1player in a
+guild called miner the player's maximum health in the guild "miner" will
+go up 1 so becomes 21 and let's say three people joined... then the max
+health will be 23!!! but it MUST only affect the players in the guild!!
+
+this will not be a command... but it will be event and public function!!
+
+so... since I don't think I can do anymore typing...  someone else
+should implement this feature.
