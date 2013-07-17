@@ -59,7 +59,7 @@ class pg implements Plugin{
 		switch($cmd)
 		{
 			case "guild":
-			$subCommand = strtolower(array_shift($args));
+			$command = array_shift($params);
 			$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 			switch ($command)
 			{
