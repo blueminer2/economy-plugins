@@ -59,9 +59,9 @@ class pg implements Plugin{
 		switch($cmd)
 		{
 			case "guild":
-			$command = array_shift($params);
+			$subCommand = strtolower(array_shift($args));
 			$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
-			switch ($command)
+			switch ($subCommand)
 			{
 				case "help":
 				$output .= "[PocketGuild == Help (page1)]\n";

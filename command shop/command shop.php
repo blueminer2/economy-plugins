@@ -9,7 +9,7 @@ class=cs
 apiversion=9
 */
 
-class ExamplePlugin implements Plugin{
+class cs implements Plugin{
 	private $api;
 	public function __construct(ServerAPI $api, $server = false){
 		$this->api = $api;
@@ -220,7 +220,7 @@ class ExamplePlugin implements Plugin{
 					$output .= "===========================\n";
 					break;
 				}
-				$subCommand = $args[0];
+				$subCommand = strtolower(array_shift($args));
 				$username = $issuer->username;
 				$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 				switch($subCommand){
