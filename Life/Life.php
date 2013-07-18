@@ -64,7 +64,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age3);
 			}
 			if($this->api->time->get(40000))
 			{
@@ -74,7 +74,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age4);
 			}
 			if($this->api->time->get(50000))
 			{
@@ -84,7 +84,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age5);
 			}
 			if($this->api->time->get(60000))
 			{
@@ -94,7 +94,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age6);
 			}
 			if($this->api->time->get(70000))
 			{
@@ -104,7 +104,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age7);
 			}
 			if($this->api->time->get(80000))
 			{
@@ -114,7 +114,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age8);
 			}
 			if($this->api->time->get(90000))
 			{
@@ -124,7 +124,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age9);
 			}
 			if($this->api->time->get(100000))
 			{
@@ -134,7 +134,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age10);
 			}
 			if($this->api->time->get(140000))
 			{
@@ -144,7 +144,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age15);
 			}
 			if($this->api->time->get(170000))
 			{
@@ -154,7 +154,7 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age20);
 			}
 			if($this->api->time->get(220000))
 			{
@@ -164,13 +164,13 @@ class ExamplePlugin implements Plugin{
 								'age' => $growth
 								)
 						);
-				$this->overwriteConfig($age2);
+				$this->overwriteConfig($age30);
 			}
 		break;
 		}
 	}
 	
-	public function handleCommand($cmd, $arg){
+	public function handleCommand($cmd, $args, $issuer, $alias){
 		$output = "";
 		switch($cmd){
 			case "life":
