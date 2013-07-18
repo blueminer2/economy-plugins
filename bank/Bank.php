@@ -107,7 +107,7 @@ class bank implements Plugin{
 						$this->api->dhandle("money.handle", array(
 										'username' => $playerBank,
 										'method' => 'grant',
-										'amount' => $amount
+										'amount' => -$amount
 								));
 						$result = array(
 								$playerBank => array(
@@ -132,7 +132,7 @@ class bank implements Plugin{
 						$this->api->dhandle("money.handle", array(
 										'username' => $playerBank,
 										'method' => 'grant',
-										'amount' => -$amount
+										'amount' => $amount
 								));
 						$result = array(
 								$playerBank => array(
