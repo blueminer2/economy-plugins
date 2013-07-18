@@ -23,12 +23,12 @@ class ability implements Plugin{
 	
 	}
 
-	public function handleCommand($cmd, $params, $issuer, $alias, $args){
+	public function handleCommand($cmd, $args, $issuer, $alias){
 		$output = "";
 		switch($cmd)
 		{
 			case "ability":
-			$subCommand = strtolower(array_shift($args));
+			$subCommand = $args[0];
 				switch($subCommand){
 					case "help":			
 						$output .= "==[availible abilities]==\n";
