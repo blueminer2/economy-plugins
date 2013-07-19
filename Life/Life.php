@@ -226,8 +226,10 @@ class ExamplePlugin implements Plugin{
 						}
 						$output .= $this->joinJob($issuer->username, $jobname);
 						break;
-					break;
+						case "marriage":
+						break;
 				}
+				break;
 		}
 		return $output;
 	}
