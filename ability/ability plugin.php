@@ -2,133 +2,84 @@
 
 /*
 __PocketMine Plugin__
-name=ability plugin
-version=0.0.2
-author=miner
-class=ability
+name=ability
+version=0.0.1
+author=Miner
+class=ab
 apiversion=9
 */
 
-class ability implements Plugin{
+class ab implements Plugin{
 	private $api;
 	public function __construct(ServerAPI $api, $server = false){
 		$this->api = $api;
 	}
-
+	
 	public function init(){
-		$this->api->console->register("ability", "Ability plugin for pvp servers", array($this, "handlecommand"));
+		$this->api->console->register("ability", "Ability plugin", array($this, "handleCommand"));
+		$this->api->console->alias("list", "ability");
+		$this->api->console->alias("paladin", "ability");
+		/*
+		$this->api->console->alias("miner", "ability");
+		$this->api->console->alias("cooker", "ability");
+		$this->api->console->alias("deathnoter", "ability");
+		$this->api->console->alias("axer", "ability");
+		*/
+		$this->path = $this->api->plugin->createConfig($this, array());
 	}
 	
 	public function __destruct(){
 	
 	}
-
-	public function handleCommand($cmd, $args, $issuer, $alias){
+	
+	public function handleCommand($cmd, $arg){
 		$output = "";
-		switch($cmd)
-		{
-			case "ability":
-			$subCommand = $args[0];
-				switch($subCommand){
-					case "help":			
-						$output .= "==[availible abilities]==\n";
-						$output .= "[paladin]\n";
-						$output .= "[cooker]\n";
-						$output .= "[watergod]\n";
-						$output .= "[axer]\n";
-						break;
-					case "paladin":
-					if($issuer instanceof Player)
-					{
-						$output .= "Please run this command in-game.\n";
-						break;
-					}
-						$bomber = array(
-											364 => "steak",
-                    	                    267 => "ironsword",
-                        	                306 => "ironhelmet",
-											299 => "leatherchestplate",
-                                	        316 => "goldleggings",
-                                    	    301 => "leatherboots"
-						);
-						$cmd = "give";
-						$params = array($username, $bomber);
-						$issuer = $this->api->player->get($username);
-						$alias = false;
-						$this->api->block->commandHandler($cmd, $params, $issuer, $alias);
-						$output .= "Granted you the paladin ability.\n";
-						break;
-					case "cooker":
-					if(!($issuer instanceof Player))
-					{
-						$output .= "Please run this command in-game.\n";
-						break;
-					}
-						$bomber = array(
-											364 => "steak",
-											360 => "melon",
-											260 => "apple",
-											366 => "cookedchicken",
-											257 => "ironpickaxe",
-											306 => "ironhelmet",
-											307 => "ironchestplate",
-											308 => "ironleggings",
-											309 => "ironboots",
-						);
-						$cmd = "give";
-						$issuer = $this->api->player->get($username);
-						$params = array($username, $bomber);
-						$alias = false;
-						$this->api->block->commandHandler($cmd, $params, $issuer, $alias);
-						$output .= "Granted you the cooker ability.\n";
-						break;
-					case "watergod":
-					if(!($issuer instanceof Player))
-					{
-						$output .= "Please run this command in-game.\n";
-						break;
-					}
-						$bomber = array(
-											8 => "water",
-											8 => "water",
-											8 => "water",
-											283 => "goldsword",
-											310 => "diamondhelmet",
-											307 => "ironchestplate",
-											316 => "goldleggings",
-											305 => "chainmailboots",
-						);
-						$cmd = "give";
-						$params = array($username, $bomber);
-						$issuer = $this->api->player->get($username);
-						$alias = false;
-						$this->api->block->commandHandler($cmd, $params, $issuer, $alias);
-						$output .= "Granted you the watergod ability.\n";
-						break;
-					case "axer":
-					if(!($issuer instanceof Player))
-					{
-						$output .= "Please run this command in-game.\n";
-						break;
-					}
-						$bomber = array(
-											279 => "diamondaxe",
-											282 => "mushroomstew",
-											302 => "chainmailhelmet",
-											315 => "goldchestplate",
-											316 => "goldleggings",
-											305 => "chainmailboots",
-						);
-						$cmd = "give";
-						$params = array($username, $bomber);
-						$issuer = $this->api->player->get($username);
-						$alias = false;
-						$this->api->block->commandHandler($cmd, $params, $issuer, $alias);
-						$output .= "Granted you the axer ability.\n";
-						break;
-					}
-		break;
+		if($alias !== false){
+			$cmd = $alias;
+		}
+		if($cmd{0} === "ability"){
+			$cmd = substr($cmd, 1);
+		}
+		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
+		
+		switch($cmd){
+			case "list":
+			if($issuer instanceof Player)
+			{
+				$output .= "[ability :: plugin]\n";
+				$output .= "[paladin]";
+				/*
+				$output .= "[miner]";
+				$output .= "[cooker]";
+				$output .= "[deathnoter]";
+				$output .= "[axer]";
+				*/
+			}
+			break;
+			case "paladin":
+			$target = $data->username;
+			if($issuer instanceof Player)
+			{
+				$this->api->plugin->createConfig($this,array(
+							$target => array(
+								"ironsword" => 267,
+								"leatherhelmet" => 298,
+								"ironchestplate" => 307,
+								"ironleggings" => 308,
+								"goldboots" => 317,
+								"apple" => 260
+							)
+				));
+				$paladin = $cfg[$target][];
+				$cmd = "give";
+				$params = array($username, $paladin);
+				$player = $issuer->username;
+				$alias = false;
+				$this->api->block->commandHandler($cmd, $params, $player, $alias);
+			}
+			break;
 		}
 		return $output;
 	}
+
 }
