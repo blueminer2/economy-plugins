@@ -3,7 +3,7 @@
 /*
 __PocketMine Plugin__
 name=bank
-version=0.0.2
+version=0.1.2
 author=miner&omattyao
 class=bank
 apiversion=9
@@ -11,6 +11,7 @@ apiversion=9
 
 define("DEFAULT_ASSETS", 100);
 define("DEFAULT_LOANS", 0);
+define("DEFAULT_POINT", 100);
 
 class bank implements Plugin{
 	private $api;
@@ -22,6 +23,7 @@ class bank implements Plugin{
 		$this->api->addHandler("player.join", array($this, "eventHandler"));
 		$this->api->console->register("bank", "bank commands", array($this, "handleCommand"));
 		$this->api->ban->cmdWhitelist("bank");
+		$this->api->console->register("point", "use point for getting discounts on spendings & change it into money", array($this, "handleCommand"));
 		$this->path = $this->api->plugin->createConfig($this, array());
 		/*
 		
@@ -48,10 +50,11 @@ class bank implements Plugin{
 					$this->api->plugin->createConfig($this,array(
 							$target => array(
 									'bank' => DEFAULT_ASSETS, 
-									'loans' => DEFAULT_LOANS
+									'loans' => DEFAULT_LOANS,
+									'point' => DEFAULT_POINT
 							)
 					));
-					$this->api->chat->broadcast("[Bank]$target has registered to the bank.");
+					$this->api->chat->broadcast("[Bank]$target has registered to the bank.\n");
 				}
 		}
 	}
@@ -186,6 +189,56 @@ class bank implements Plugin{
 						$output .= "[Bank]Paid back your loan... come back again!!\n";
 				}
 			break;
+			case "point":
+			if (!($issuer instanceof Player))
+			{
+				$output .= "Please use this command in the game.\n";
+				break;
+			}
+			$subCommand = strtolower(array_shift($args));
+			$username = $issuer->username;
+			$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
+			switch($subCommand){
+				case "help":
+				  $output .= "===[Bank :: Commands]===\n";
+				  $output .= "===[Bank :: Point Commands]==\n";
+				  $output .= "[Bank]/point help :: shows commands\n";
+				  $output .= "[Bank]/point check ::check you points\n";
+				  $output .= "[Bank]/point exchange (amount) :: exchange points into money\n";
+				case "check":
+				$target = $username;
+						if(!array_key_exists($target, $cfg))
+						{
+							$output .= "[Bank]You don't have a bank account\n";
+							break;
+						}
+						$pts = $cfg[$username]['point'];
+						$output .= "[Bank]You have $pts in your bank account\n";
+						break;
+				case "exchange":
+				$ptp = $username;
+				$pt = $cfg[$ptp]['point'];
+				$input = array_shift($args);
+				$pm = $this->api->dhandle("money.player.get", array('username' => $username));
+				if(!is_numeric($input) or $input <= 0 or $pt <= $input)
+				{
+					$output .= "[Bank]Check your points\n";
+				}
+				$pt -= $input;
+				$pm += $input;
+				$this->api->dhandle("money.handle", array(
+										'username' => $playerBank,
+										'method' => 'grant',
+										'amount' => $input
+								));
+				$result = array(
+								$ptp => array(
+										'point' => $pt
+								),
+						);
+				$this->overwriteConfig($result);
+				$output .= "[Bank]Exchanged $input points to $input PM\n";
+			}
 		}
 		return $output;
 	}
