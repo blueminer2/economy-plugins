@@ -45,6 +45,7 @@ class ability implements Plugin{
 					case "help2":
 					$output .= "[Lists of abilities]\n";
 					$output .= "[ability]turbo\n";
+					$output .= "[ability]luminous";
 					break;
 					case "smasher";
 					break;
