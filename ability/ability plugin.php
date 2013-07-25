@@ -2,30 +2,21 @@
 
 /*
 __PocketMine Plugin__
-name=ability
+name=Ability
 version=0.0.1
-author=Miner
-class=ab
+author=miner / CHOCO.M / omattyao_yk / chaosruin / sekjun9878
+class=ability
 apiversion=9
 */
 
-class ab implements Plugin{
+class ability implements Plugin{
 	private $api;
 	public function __construct(ServerAPI $api, $server = false){
 		$this->api = $api;
 	}
 	
 	public function init(){
-		$this->api->console->register("ability", "Ability plugin", array($this, "handleCommand"));
-		$this->api->console->alias("list", "ability");
-		$this->api->console->alias("paladin", "ability");
-		/*
-		$this->api->console->alias("miner", "ability");
-		$this->api->console->alias("cooker", "ability");
-		$this->api->console->alias("deathnoter", "ability");
-		$this->api->console->alias("axer", "ability");
-		*/
-		$this->path = $this->api->plugin->createConfig($this, array());
+		$this->api->console->register("ability", "Example command", array($this, "handleCommand"));
 	}
 	
 	public function __destruct(){
@@ -34,52 +25,35 @@ class ab implements Plugin{
 	
 	public function handleCommand($cmd, $arg){
 		$output = "";
-		if($alias !== false){
-			$cmd = $alias;
-		}
-		if($cmd{0} === "ability"){
-			$cmd = substr($cmd, 1);
-		}
-		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
-		
 		switch($cmd){
-			case "list":
-			if($issuer instanceof Player)
+			case "ability":
+			if (!($issuer instanceof Player))
 			{
-				$output .= "[ability :: plugin]\n";
-				$output .= "[paladin]";
-				/*
-				$output .= "[miner]";
-				$output .= "[cooker]";
-				$output .= "[deathnoter]";
-				$output .= "[axer]";
-				*/
+				$output .= "Please use this command in the game.\n";
+				break;
 			}
-			break;
-			case "paladin":
-			$target = $data->username;
-			if($issuer instanceof Player)
-			{
-				$this->api->plugin->createConfig($this,array(
-							$target => array(
-								"ironsword" => 267,
-								"leatherhelmet" => 298,
-								"ironchestplate" => 307,
-								"ironleggings" => 308,
-								"goldboots" => 317,
-								"apple" => 260
-							)
-				));
-				$paladin = $cfg[$target][];
-				$cmd = "give";
-				$params = array($username, $paladin);
-				$player = $issuer->username;
-				$alias = false;
-				$this->api->block->commandHandler($cmd, $params, $player, $alias);
-			}
-			break;
+			$subCommand = strtolower(array_shift($args));
+			$username = $issuer->username;
+			$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
+				switch($subCommand){
+					case "help":
+					$output .= "[Lists of abilities]\n";
+					$output .= "[ability]smasher\n";
+					$output .= "[ability]magician\n";
+					$output .= "[ability]paladin\n";
+					break;
+					case "help2":
+					$output .= "[Lists of abilities]\n";
+					$output .= "[ability]turbo\n";
+					break;
+					case "smasher";
+					break;
+					case "magician";
+					break;
+					case "paladin";
+					break;
+				}
 		}
-		return $output;
 	}
 
 }
