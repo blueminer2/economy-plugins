@@ -4,12 +4,13 @@
 __PocketMine Plugin__
 name=Life
 version=0.0.1
-author=miner&omattyao
+author=miner&omattyao&chaosruin
 class=Life
 apiversion=9
 */
 
 define("DEFAULT_AGE", 1);
+define("DEFAULT_GEN", 0);//Man:1 Woman:2 Gay(?):0
 
 class ExamplePlugin implements Plugin{
 	private $api;
@@ -32,6 +33,14 @@ class ExamplePlugin implements Plugin{
 	$output = "";
 	$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 	switch($event){
+	    
+		case "player.spawn":
+					if($this->data[$data->username]->get("종족") === 선택안함 or $this->data[$data->username]->get("성별") === 0){
+					$data->sendChat("[Life]Please select your gender.\n/life gender <man/woman>\n");
+						break;
+					}
+					break;
+
 		case "player.join":
 		$target = $data->username;
 				if(!array_key_exists($target, $cfg))
@@ -39,11 +48,13 @@ class ExamplePlugin implements Plugin{
 					$this->api->plugin->createConfig($this,array(
 							$target => array(
 									'age' => DEFAULT_AGE
+									'gender' => DEFAULT_GEN
 							)
 					));
 					$this->api->chat->broadcast("[Life]$target is born in this town.");
 				}
 				break;
+				
 		case "player.growth":
 		$players = $this->api->player->getall($level = null)->username;
 			if($this->api->time->get(20000))
@@ -228,6 +239,36 @@ class ExamplePlugin implements Plugin{
 						break;
 						case "marriage":
 						break;
+						case "gender":
+				switch($params[0]){
+			default:
+				$output .="[Life]Oops?\n";
+				break;
+			case "":
+					$output .= "Usage:/life gender <Man/Woman>\n";
+					break;
+			case "woman":
+				if($cfg[$issuer->username]->get("gender") !== 0){
+					$output .= "[Life]You already selected your gender\n";
+					break;					
+				}else{
+					$cfg[$issuer->username]->set("gender", 2);
+					$output  .= "[Life] Your Woman\n";
+					break;
+				}
+				break;
+			case "man":
+				if($cfg[$issuer->username]->get("gender") !== 0){
+					$output .= "[Life]You already selected your gender\n";
+					break;					
+				}else{
+					$cfg[$issuer->username]->set("gender", 1);
+					$output  .= "[Life]Your Man.\n";
+					break;
+				}
+					break;
+				}
+					break;
 				}
 				break;
 		}
