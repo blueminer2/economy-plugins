@@ -47,8 +47,8 @@ class life implements Plugin{
 				{
 					$this->api->plugin->createConfig($this,array(
 							$target => array(
-									'age' => DEFAULT_AGE
-									'gender' => DEFAULT_GEN
+									'age' => DEFAULT_AGE,
+									'gender' => DEFAULT_GEN,
 							)
 					));
 					$this->api->chat->broadcast("[Life]$target is born in this town.");
