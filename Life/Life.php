@@ -20,8 +20,10 @@ class life implements Plugin{
 	
 	public function init(){
 		$this->api->addHandler("player.join", array($this, "eventHandler"));
+		$this->api->addHandler("player.spawn", array($this, "eventHandler"));
 		$this->api->addHandler("player.growth", array($this, "eventHandler"));
 		$this->api->console->register("life", "command that handles most of your life", array($this, "handleCommand"));
+		$this->api->ban->cmdWhitelist("life");
 		$this->path = $this->api->plugin->createConfig($this, array());
 	}
 	
