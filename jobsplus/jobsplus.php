@@ -252,7 +252,6 @@ class PocketJobs implements Plugin
 					if($values['ID'] === $id
 							and $values['meta'] === $meta)
 					{
-						console("ATTA!");
 						$targetJob = strtolower($jobname);
 						$amount = $values['amount'];
 						$flag = true;
@@ -265,7 +264,6 @@ class PocketJobs implements Plugin
 		$cfg = $this->playerList->get($username);
 		if($cfg['slot1'] === $targetJob or $cfg['slot2'] === $targetJob)
 		{
-			console("KOKODAYO");
 			$this->api->dhandle("money.handle", array(
 					'username' => $username,
 					'method' => 'grant',
