@@ -3,8 +3,8 @@
 /*
  __PocketMine Plugin__
 name=jobs+
-version=1.4.0
-author=(MinecrafterJPN) / choco.M / miner / Omattyao_yk
+version=1.0.0
+author=(MinecrafterJPN) / choco.M / miner / Omattyao_yk / Cha0sRuin
 class=PocketJobs
 apiversion=9
 */
@@ -30,7 +30,7 @@ class PocketJobs implements Plugin
 		$this->jobList->save();
 		$this->playerList->save();
 		$this->config->save();
-		$this->api->console->register("jobs", "Super command of PocketJobs", array($this, "commandHandler"));
+		$this->api->console->register("jobs", "Master command of Jobs+", array($this, "commandHandler"));
 		$this->api->addHandler("player.join", array($this, "eventHandler"));
 		$this->api->addHandler("player.block.break", array($this, "eventHandler"));
 		$this->api->addHandler("player.block.place", array($this, "eventHandler"));
@@ -69,25 +69,26 @@ class PocketJobs implements Plugin
 				$subCmd = strtolower($args[0]);
 				switch($subCmd){
 					case "":
-						$output .= "[PocketJobs]/jobs : show the commands available to you\n";
-						$output .= "[PocketJobs]/jobs browse : browse the jobs available to you\n";
-						$output .= "[PocketJobs]/jobs join <jobname> : join the selected job\n";
-						$output .= "[PocketJobs]/jobs leave <jobname> : leave the selected job\n";
-						$output .= "[PocketJobs]/jobs info <jobname> : show the detail of selected job\n";
-						$output .= "[PocketJobs]/jobs reset : reset the job list to default\n";
+						$output .= "[Jobs+]/jobs : show the commands available to you\n";
+						$output .= "[Jobs+]/jobs browse : browse the jobs available to you\n";
+						$output .= "[Jobs+]/jobs join <jobname> : join the selected job\n";
+						$output .= "[Jobs+]/jobs leave <jobname> : leave the selected job\n";
+						$output .= "[Jobs+]/jobs info <jobname> : show the detail of selected job\n";
+						$output .= "[Jobs+]/jobs reset : reset the job list to default\n";
+						$output .= "[Jobs+]/jobs my : show my job status\n";
 						break;
 					case "my":
 						if($issuer === "console"){
-							console("[PocketJobs]Must be run on the world.");
+							console("[Jobs+]Must be run on the world.");
 							break;
 						}
 						$cfg = $this->playerList->get($issuer->username);
 						$slot1 = $cfg['slot1'] === null ? "empty" : $cfg['slot1'];
 						$slot2 = $cfg['slot2'] === null ? "empty" : $cfg['slot2'];
-						$output .= "[PocketJobs]slot1:$slot1 slot2: $slot2\n";
+						$output .= "[Jobs+]slot1:$slot1 slot2: $slot2\n";
 						break;
 					case "browse":
-						$output .= "[PocketJobs]";
+						$output .= "[Jobs+]";
 						foreach($this->jobList->getAll(true) as $job){
 							if($job !== "Default") $output .= $job . " ";
 						}
@@ -95,7 +96,7 @@ class PocketJobs implements Plugin
 						break;
 					case "join":
 						if($issuer === "console"){
-							console("[PocketJobs]Must be run on the world.");
+							console("[Jobs+]Must be run on the world.");
 							break;
 						}
 						if(!isset($args[1])){
@@ -110,14 +111,14 @@ class PocketJobs implements Plugin
 							}
 						}
 						if(!$jobExist){
-							$output .= "[PocketJobs]$args[1] not found.";
+							$output .= "[Jobs+]$args[1] not found.";
 							break;
 						}
 						$output .= $this->joinJob($issuer->username, $jobname);
 						break;
 					case "leave":
 						if($issuer === "console"){
-							console("[PocketJobs]Must be run on the world.");
+							console("[Jobs+]Must be run on the world.");
 							break;
 						}
 						if(!isset($args[1])){
@@ -132,7 +133,7 @@ class PocketJobs implements Plugin
 							}
 						}
 						if(!$jobExist){
-							$output .= "[PocketJobs]$args[1] not found.";
+							$output .= "[Jobs+]$args[1] not found.";
 							break;
 						}
 						$output .= $this->leaveJob($issuer->username, $jobname);
@@ -150,26 +151,26 @@ class PocketJobs implements Plugin
 							}
 						}
 						if(!$jobExist){
-							$output .= "[PocketJobs]$args[1] not found.";
+							$output .= "[Jobs+]$args[1] not found.";
 							break;
 						}
 						$output .= $this->infoJob($jobname);
 						break;
 					case "stat":
 						if($issuer === "console"){
-							console("[PocketJobs]Must be run on the world.");
+							console("[Jobs+]Must be run on the world.");
 							break;
 						}
-						$output .= "[PocketJobs]Unimplemented wait for a moment :)";
+						$output .= "[Jobs+]Unimplemented wait for a moment :)";
 						break;
 					case "reset":
 						if($issuer !== "console"){
-							$output .= "[PocketJobs]Must be run on the console.\n";
+							$output .= "[Jobs+]Must be run on the console.\n";
 							break;
 						}
-						console("[PocketJobs]Reseting the config...");
+						console("[Jobs+]Reseting the config...");
 						$this->defaultConfig();
-						console("[PocketJobs]Completed");
+						console("[Jobs+]Completed");
 						break;
 				}
 		}
@@ -182,14 +183,14 @@ class PocketJobs implements Plugin
 		$cfg = $this->playerList->get($username);
 		if(isset($cfg['slot1'])){
 			if(isset($cfg['slot2'])){
-				return "[PocketJobs]Your job slot is full.\n";
+				return "[Jobs+]Your job slot is full.\n";
 			}else{
 				$this->playerList->set($username, array(
 						'slot1' => $cfg['slot1'],
 						'slot2' => $jobname
 				));
 				$this->playerList->save();				
-				return "[PocketJobs]Set $jobname to your job slot2.\n";
+				return "[Jobs+]Set $jobname to your job slot2.\n";
 			}
 		}else{
 			$this->playerList->set($username, array(
@@ -197,7 +198,7 @@ class PocketJobs implements Plugin
 					'slot2' => $cfg['slot2']
 			));
 			$this->playerList->save();
-			return "[PocketJobs]Set $jobname to your job slot1.\n";
+			return "[Jobs+]Set $jobname to your job slot1.\n";
 		}
 	}
 
@@ -210,16 +211,16 @@ class PocketJobs implements Plugin
 					'slot2' => $cfg['slot2']
 			));
 			$this->playerList->save();
-			return "[PocketJobs]Remove $jobname from your job slot1.\n";
+			return "[Jobs+]Remove $jobname from your job slot1.\n";
 		}elseif($cfg['slot2'] === $jobname){
 			$this->playerList->set($username, array(
 					'slot1' => $cfg['slot1'],
 					'slot2' => null
 			));
 			$this->playerList->save();
-			return "[PocketJobs]Remove $jobname from your job slot2.\n";
+			return "[Jobs+]Remove $jobname from your job slot2.\n";
 		}else{
-			return "[PocketJobs]You are not part of $jobname\n";
+			return "[Jobs+]You are not part of $jobname\n";
 		}
 	}
 
@@ -229,13 +230,13 @@ class PocketJobs implements Plugin
 		foreach($this->jobList->getAll(true) as $job){
 			if(strtolower($job) === $jobname){
 				$info = $this->jobList->get($job);
-				$output .= "[PocketJobs]$job \n";
+				$output .= "[Jobs+]$job \n";
 				foreach($info as $type => $detail){
 					foreach($detail as $value){
 						$id = $value['ID'];
 						$meta = $value['meta'];
 						$amount = $value['amount'];
-						$output .= "[PocketJobs]$type $id:$meta $amount\n";
+						$output .= "[Jobs+]$type $id:$meta $amount\n";
 					}
 				}
 			}
@@ -361,7 +362,7 @@ class PocketJobs implements Plugin
 		$this->jobList->save();
 		$this->playerList->save();
 		$this->config->save();
-		console("[PocketJobs]Set to default config.");
+		console("[Jobs+]Set to default config.");
 	}
 
 	public function __destruct()
