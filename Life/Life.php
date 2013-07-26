@@ -35,7 +35,7 @@ class ExamplePlugin implements Plugin{
 	switch($event){
 	    
 		case "player.spawn":
-					if($this->data[$data->username]->get("종족") === 선택안함 or $this->data[$data->username]->get("성별") === 0){
+					if($this->data[$data->username]->get("gender") === 0){
 					$data->sendChat("[Life]Please select your gender.\n/life gender <man/woman>\n");
 						break;
 					}
