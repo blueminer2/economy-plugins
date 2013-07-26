@@ -5,14 +5,14 @@ __PocketMine Plugin__
 name=Life
 version=0.0.1
 author=miner&omattyao&chaosruin
-class=Life
+class=life
 apiversion=9
 */
 
 define("DEFAULT_AGE", 1);
 define("DEFAULT_GEN", 0);//Man:1 Woman:2 Gay(?):0
 
-class ExamplePlugin implements Plugin{
+class life implements Plugin{
 	private $api;
 	public function __construct(ServerAPI $api, $server = false){
 		$this->api = $api;
