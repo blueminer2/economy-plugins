@@ -10,7 +10,6 @@ apiversion=9
 */
 
 define("DEFAULT_AGE", 1);
-define("DEFAULT_GEN", 0);//Man:1 Woman:2 Gay(?):0
 define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
 define("DEFAULT_GEN", 0);//Man:1 Woman:2
 define("MARRIED_TO", 0); //if not married, it will be 0
