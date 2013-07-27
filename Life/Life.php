@@ -441,11 +441,8 @@ class life implements Plugin{
 					$output  .= "[Life]You selected Man.\n";
 					break;
 				}
-					break;
-				}
-					break;
-				}
 				break;
+				}
 		}
 		return $output;
 	}
