@@ -7,3 +7,4 @@ __Developers__
       Omattyao
       Miner
       Sekjun
+	  ChaosRuin

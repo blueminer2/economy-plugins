@@ -3,7 +3,7 @@
 /*
 __PocketMine Plugin__
 name=Life
-version=0.0.1
+version=0.0.2
 author=miner&omattyao&chaosruin
 class=life
 apiversion=9
@@ -11,6 +11,7 @@ apiversion=9
 
 define("DEFAULT_AGE", 1);
 define("DEFAULT_GEN", 0);//Man:1 Woman:2 Gay(?):0
+define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
 
 class life implements Plugin{
 	private $api;
@@ -51,6 +52,7 @@ class life implements Plugin{
 							$target => array(
 									'age' => DEFAULT_AGE,
 									'gender' => DEFAULT_GEN,
+									'school' => DEFAULT_SCHOOL,
 							)
 					));
 					$this->api->chat->broadcast("[Life]$target is born in this town.");
