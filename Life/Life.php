@@ -12,6 +12,9 @@ apiversion=9
 define("DEFAULT_AGE", 1);
 define("DEFAULT_GEN", 0);//Man:1 Woman:2 Gay(?):0
 define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
+define("DEFAULT_GEN", 0);//Man:1 Woman:2
+define("MARRIED_TO", 0); //if not married, it will be 0
+define("LIKE_SOMEONE", 0);//if set as "I don't want to marry" then it should be 0
 
 class life implements Plugin{
 	private $api;
@@ -25,6 +28,7 @@ class life implements Plugin{
 		$this->api->addHandler("player.growth", array($this, "eventHandler"));
 		$this->api->console->register("life", "command that handles most of your life", array($this, "handleCommand"));
 		$this->api->ban->cmdWhitelist("life");
+		$this->api->addHandler("server.start", array($this, "eventHandler"));
 		$this->path = $this->api->plugin->createConfig($this, array());
 	}
 	
@@ -44,6 +48,13 @@ class life implements Plugin{
 					}
 					break;
 
+		case "server.start":
+		if(!file_exists("./plugins/PocketMoney.php"))
+		{
+			console("[Life]No PocketMoney!!!");
+			$cmd = "stop";
+			$this->api->block->commandHandler($cmd);
+		}
 		case "player.join":
 		$target = $data->username;
 				if(!array_key_exists($target, $cfg))
@@ -53,6 +64,8 @@ class life implements Plugin{
 									'age' => DEFAULT_AGE,
 									'gender' => DEFAULT_GEN,
 									'school' => DEFAULT_SCHOOL,
+									'married' => MARRIED_TO,
+									'like' => LIKE_SOMEONE,
 							)
 					));
 					$this->api->chat->broadcast("[Life]$target is born in this town.");
@@ -306,7 +319,7 @@ class life implements Plugin{
 						$output .= "[Life]You don't have Pocketjobs loaded";
 					}
 					$page = $cfg[$playername]['age'];
-					if($page <= 15)
+					if($page < 15)
 					{
 						$output .= "[Life]You are too young to get a job!!";
 					}
@@ -332,6 +345,39 @@ class life implements Plugin{
 						$output .= $this->joinJob($issuer->username, $jobname);
 						break;
 						case "marriage":
+						$target = $player->username;
+						$marryto = $args[1];
+						if($cfg[$issuer]['gender'] = $cfg[$target]['gender'])
+						{
+							$output .= "[Life]You cannot marry a person with the same gender!\n";
+						}
+						if($cfg[$issuer]['married'] == 1)
+						{
+							$output .= "[Life]You are already married to someone\n";
+						}
+						if($cfg[$target]['married'] == 1)
+						{
+							$output .= "[Life] $target is already married to someone";
+						}
+						if($cfg[$issuer]['age'] < 15 or $cfg[$target]['age'] < 15)
+						{
+							$output .= "[Life]You or your bride is too young to marry each other\n";
+						}
+						if(!$cfg[$issuer]->get('like') = $target or !$cfg[$target]->get('like') = $issuer)
+						{
+							if($cfg[$target]->get('gender') = 1)
+							{
+								$output .= "[Life]He doesn't like you\n";
+							}
+							if($cfg[$target]->get('gender') = 2)
+							{
+								$output .= "[Life]She doesn't like you\n";
+							}
+						}
+						if($marryto = $issuer)
+						{
+							$output .= "[Life]You can't marry yourself\n";
+						}
 						break;
 						case "gender":
 				switch($params[0]){
