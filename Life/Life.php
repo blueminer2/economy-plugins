@@ -25,9 +25,9 @@ class life implements Plugin{
 		$this->api->addHandler("player.join", array($this, "eventHandler"));
 		$this->api->addHandler("player.spawn", array($this, "eventHandler"));
 		$this->api->addHandler("player.growth", array($this, "eventHandler"));
+		$this->api->addHandler("server.start", array($this, "eventHandler"));
 		$this->api->console->register("life", "command that handles most of your life", array($this, "handleCommand"));
 		$this->api->ban->cmdWhitelist("life");
-		$this->api->addHandler("server.start", array($this, "eventHandler"));
 		$this->path = $this->api->plugin->createConfig($this, array());
 	}
 	
@@ -41,8 +41,8 @@ class life implements Plugin{
 	switch($event){
 	    
 		case "player.spawn":
-					if($this->data[$data->username]->get("gender") === 0){
-					$data->sendChat("[Life]Please select your gender.\n/life gender <man/woman>\n");
+					if($this->config->get("gender") === 0){
+					$data->sendChat("[Life]Please select your gender.\n/life <man/woman>\n");
 						break;
 					}
 					break;
@@ -67,7 +67,7 @@ class life implements Plugin{
 									'like' => LIKE_SOMEONE,
 							)
 					));
-					$this->api->chat->broadcast("[Life]$target is born in this town.");
+					$this->api->chat->broadcast("[Life]$target is born in this town.\n");
 				}
 				break;
 				
@@ -296,34 +296,34 @@ class life implements Plugin{
 				switch($subCommand){
 					case "":
 					case "help":
-					$output .= "  ==[ :::Lists of All Availible Commands::: ]==";
-					$output .= "==[ ::Showing the Commands of {Life} Plugin:: ]==";
-					$output .= "[Life]/life age ++Shows How Old You Are++";
-					$output .= "[Life]/life job ++Shows the availible jobs you can get for your age++";
+					$output .= "  ==[ :::Lists of All Availible Commands::: ]==\n";
+					$output .= "==[ ::Showing the Commands of {Life} Plugin:: ]==\n";
+					$output .= "[Life]/life age ++Shows how old you are\.n";
+					$output .= "[Life]/life job ++Shows availible jobs you can get.\n";
 					break;
 					case "age":
 					if(!array_key_exists($issuer->username, $cfg))
 						{
-							$output .= "[Life]You are not a villager.";
+							$output .= "[Life]You are not a villager./n";
 							break;
 						}
 						$age = $cfg[$issuer->username]['age'];
-						$output .= "[Life]$age years old";
+						$output .= "[Life]$age years old\n";
 						break;
 					case "jobs":
 					$playername = $issuer->username;
 					$jobs = $args[1];
-					if(!file_exists("./plugins/Pocketjobs/config.yml") or !file_exists("./plugins/Pocketjobs/joblist.yml") or !file_exists("./plugins/Pocketjobs/playerlist.yml"))
+					if(!file_exists("./plugins/jobs+/config.yml") or !file_exists("./plugins/jobs+/joblist.yml") or !file_exists("./plugins/jobs+/playerlist.yml"))
 					{
-						$output .= "[Life]You don't have Pocketjobs loaded";
+						$output .= "[Life]You don't have jobs+ loaded/n";
 					}
 					$page = $cfg[$playername]['age'];
-					if($page < 15)
+					if($page < 19)
 					{
-						$output .= "[Life]You are too young to get a job!!";
+						$output .= "[Life]You are too young to get a job!!\n";
 					}
 					if($issuer === "console"){
-							console("[PocketJobs]Must be run on the world.");
+							console("[PocketJobs]Must be run on the world.\n");
 							break;
 						}
 					if(!isset($args[2])){
@@ -332,7 +332,7 @@ class life implements Plugin{
 						}
 						$jobname = strtolower($args[2]);
 						$jobExist = false;
-						foreach($this->api->plugin->readYAML("./plugins/Pocketjobs/joblist.yml")->getAll(true) as $job){
+						foreach($this->api->plugin->readYAML("./plugins/jobs+/joblist.yml")->getAll(true) as $job){
 							if(strtolower($job) === $jobname){
 								$jobExist = true;
 							}
@@ -378,15 +378,7 @@ class life implements Plugin{
 							$output .= "[Life]You can't marry yourself\n";
 						}
 						break;
-						case "gender":
-				switch($params[0]){
-			default:
-				$output .="[Life]Oops?\n";
-				break;
-			case "":
-					$output .= "Usage:/life gender <Man/Woman>\n";
-					break;
-			case "woman":
+            case "woman":
 				if($cfg[$issuer->username]->get("gender") !== 0){
 					$output .= "[Life]You already selected your gender\n";
 					break;					
