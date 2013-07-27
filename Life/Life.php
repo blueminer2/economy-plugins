@@ -350,11 +350,11 @@ class life implements Plugin{
 						{
 							$output .= "[Life]You cannot marry a person with the same gender!\n";
 						}
-						if($cfg[$issuer]['married'] == 1)
+						if($cfg[$issuer]['married'] = 1)
 						{
 							$output .= "[Life]You are already married to someone\n";
 						}
-						if($cfg[$target]['married'] == 1)
+						if($cfg[$target]['married'] = 1)
 						{
 							$output .= "[Life] $target is already married to someone";
 						}
@@ -364,11 +364,11 @@ class life implements Plugin{
 						}
 						if(!$cfg[$issuer]->get('like') = $target or !$cfg[$target]->get('like') = $issuer)
 						{
-							if($cfg[$target]->get('gender') = 1)
+							if($cfg[$target]->get('like') = 1)
 							{
 								$output .= "[Life]He doesn't like you\n";
 							}
-							if($cfg[$target]->get('gender') = 2)
+							if($cfg[$target]->get('like') = 2)
 							{
 								$output .= "[Life]She doesn't like you\n";
 							}
@@ -377,6 +377,50 @@ class life implements Plugin{
 						{
 							$output .= "[Life]You can't marry yourself\n";
 						}
+						$result = array(
+								$issuer->username => array(
+										'married' => $marryto
+								),
+						);
+						$result2 = array(
+								$issuer->username => array(
+										'married' => $issuer->username
+								),
+						);
+						$this->overwriteConfig($result);
+						$this->overwriteConfig($result2);
+						break;
+						case "like":
+						$target = $player->username;
+						$like = $args[1];
+						if($cfg[$issuer]['gender'] = $cfg[$target]['gender'])
+						{
+							$output .= "[Life]You cannot marry a person with the same gender!\n";
+						}
+						if($cfg[$issuer]['married'] = 1)
+						{
+							$output .= "[Life]You are already married to someone\n";
+						}
+						if($cfg[$target]['married'] = 1)
+						{
+							$output .= "[Life] $target is already married to someone";
+						}
+						if($like = $issuer)
+						{
+							$output .= "[Life]You can't marry yourself\n";
+						}
+						$result = array(
+								$issuer->username => array(
+										'like' => $like
+								),
+						);
+						$result2 = array(
+								$issuer->username =>array(
+										'like' => $issuer->username
+								),
+						);
+						$this->overwriteConfig($result);
+						$this->overwriteConfig($result2);
 						break;
             case "woman":
 				if($cfg[$issuer->username]->get("gender") !== 0){
@@ -384,7 +428,7 @@ class life implements Plugin{
 					break;					
 				}else{
 					$cfg[$issuer->username]->set("gender", 2);
-					$output  .= "[Life] Your Woman\n";
+					$output  .= "[Life] You selected Woman\n";
 					break;
 				}
 				break;
@@ -394,7 +438,7 @@ class life implements Plugin{
 					break;					
 				}else{
 					$cfg[$issuer->username]->set("gender", 1);
-					$output  .= "[Life]Your Man.\n";
+					$output  .= "[Life]You selected Man.\n";
 					break;
 				}
 					break;
