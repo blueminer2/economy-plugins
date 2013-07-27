@@ -151,7 +151,47 @@ class life implements Plugin{
 						);
 				$this->overwriteConfig($age10);
 			}
+			if($this->api->time->get(110000))
+			{
+				$growth = 11;
+				$age11 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age11);
+			}
+			if($this->api->time->get(120000))
+			{
+				$growth = 12;
+				$age12 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age12);
+			}
+			if($this->api->time->get(130000))
+			{
+				$growth = 13;
+				$age13 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age13);
+			}
 			if($this->api->time->get(140000))
+			{
+				$growth = 14;
+				$age14 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age14);
+			}
+			if($this->api->time->get(150000))
 			{
 				$growth = 15;
 				$age15 = array(
@@ -161,7 +201,47 @@ class life implements Plugin{
 						);
 				$this->overwriteConfig($age15);
 			}
+			if($this->api->time->get(160000))
+			{
+				$growth = 16;
+				$age16 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age16);
+			}
 			if($this->api->time->get(170000))
+			{
+				$growth = 17;
+				$age17 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age17);
+			}
+			if($this->api->time->get(180000))
+			{
+				$growth = 18;
+				$age18 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age18);
+			}
+			if($this->api->time->get(190000))
+			{
+				$growth = 19;
+				$age19 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age19);
+			}
+			if($this->api->time->get(200000))
 			{
 				$growth = 20;
 				$age20 = array(
@@ -171,7 +251,17 @@ class life implements Plugin{
 						);
 				$this->overwriteConfig($age20);
 			}
-			if($this->api->time->get(220000))
+			if($this->api->time->get(250000))
+			{
+				$growth = 25;
+				$age25 = array(
+						$players => array(
+								'age' => $growth
+								)
+						);
+				$this->overwriteConfig($age25);
+			}
+			if($this->api->time->get(300000))
 			{
 				$growth = 30;
 				$age30 = array(
