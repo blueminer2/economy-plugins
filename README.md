@@ -9,8 +9,6 @@ __Developers__
       Sekjun
       ChaosRuin
 choco.M
-===========
-===========
 Miner
 ===========
 ===========
