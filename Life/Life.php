@@ -11,7 +11,7 @@ apiversion=9
 
 define("DEFAULT_AGE", 1);
 define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
-define("DEFAULT_GEN", 0);//Man:1 Woman:2
+define("DEFAULT_GEN", 0);//None:0 Man:1 Woman:2
 define("MARRIED_TO", 0); //if not married, it will be 0
 define("LIKE_SOMEONE", 0);//if set as "I don't want to marry" then it should be 0
 
@@ -41,7 +41,7 @@ class life implements Plugin{
 	switch($event){
 	    
 		case "player.spawn":
-					if($this->config->get("gender") === 0){
+					if($cfg[$issuer]['gender'] = 0){
 					$data->sendChat("[Life]Please select your gender.\n/life <man/woman>\n");
 						break;
 					}
@@ -423,21 +423,23 @@ class life implements Plugin{
 						$this->overwriteConfig($result2);
 						break;
             case "woman":
-				if($cfg[$issuer->username]->get("gender") !== 0){
+			$target = $player->username;
+				if($cfg[$issuer]['gender'] !== 0){
 					$output .= "[Life]You have already selected your gender\n";
 					break;					
 				}else{
-					$cfg[$issuer->username]->set("gender", 2);
+					$cfg[$issuer]->set("gender", 2);
 					$output  .= "[Life] You selected Woman\n";
 					break;
 				}
 				break;
 			case "man":
-				if($cfg[$issuer->username]->get("gender") !== 0){
+			$target = $player->username;
+				if($cfg[$issuer]['gender'] !== 0){
 					$output .= "[Life]You have already selected your gender\n";
 					break;					
 				}else{
-					$cfg[$issuer->username]->set("gender", 1);
+					$cfg[$issuer]->set("gender", 1);
 					$output  .= "[Life]You selected Man.\n";
 					break;
 				}
