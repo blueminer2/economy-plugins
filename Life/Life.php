@@ -57,7 +57,7 @@ class life implements Plugin{
 			case "player.join":
 					$this->data[$data->username] = new Config(DATA_PATH."/plugins/life/player/".$data->username.".yml", CONFIG_YAML, array(
 							'name' => $data->username,
-                            'age' => DEFAULT_AGE,
+							'age' => DEFAULT_AGE,
 							'gender' => DEFAULT_GEN,
 							'school' => DEFAULT_SCHOOL,
 							'married' => MARRIED_TO,
