@@ -429,23 +429,23 @@ class life implements Plugin{
 						$this->overwriteConfig($result);
 						$this->overwriteConfig($result2);
 						break;
-            case "woman":
+			case "man":
+				if($cfg[$issuer->username]->get("gender") !== 0){
+					$output .= "[LifeEX]You have already selected your gender\n";
+					break;					
+				}else{
+					$cfg[$issuer->username]->set("gender", 1);
+					$output  .= "[Life]You selected man.\n";
+					break;
+				}
+					break;			
+			case "woman":
 				if($cfg[$issuer->username]->get("gender") !== 0){
 					$output .= "[Life]You have already selected your gender\n";
 					break;					
 				}else{
 					$cfg[$issuer->username]->set("gender", 2);
-					$output  .= "[Life] You selected Woman\n";
-					break;
-				}
-				break;
-			case "man":
-				if($cfg[$issuer->username]->get("gender") !== 0){
-					$output .= "[Life]You have already selected your gender\n";
-					break;					
-				}else{
-					$cfg[$issuer->username]->set("gender", 1);
-					$output  .= "[Life]You selected Man.\n";
+					$output  .= "[Life]You selected woman.\n";
 					break;
 				}
 				break;
