@@ -424,7 +424,7 @@ class life implements Plugin{
 						break;
             case "woman":
 				if($cfg[$issuer->username]->get("gender") !== 0){
-					$output .= "[Life]You already selected your gender\n";
+					$output .= "[Life]You have already selected your gender\n";
 					break;					
 				}else{
 					$cfg[$issuer->username]->set("gender", 2);
@@ -434,7 +434,7 @@ class life implements Plugin{
 				break;
 			case "man":
 				if($cfg[$issuer->username]->get("gender") !== 0){
-					$output .= "[Life]You already selected your gender\n";
+					$output .= "[Life]You have already selected your gender\n";
 					break;					
 				}else{
 					$cfg[$issuer->username]->set("gender", 1);
@@ -443,6 +443,7 @@ class life implements Plugin{
 				}
 				break;
 				}
+				break;
 		}
 		return $output;
 	}
