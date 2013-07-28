@@ -54,21 +54,15 @@ class life implements Plugin{
 			$cmd = "stop";
 			$this->api->block->commandHandler($cmd);
 		}
-		case "player.join":
-		$target = $data->username;
-				if(!array_key_exists($target, $cfg))
-				{
-					$this->api->plugin->createConfig($this,array(
-							$target => array(
-									'age' => DEFAULT_AGE,
-									'gender' => DEFAULT_GEN,
-									'school' => DEFAULT_SCHOOL,
-									'married' => MARRIED_TO,
-									'like' => LIKE_SOMEONE,
-							)
-					));
-					$this->api->chat->broadcast("[Life]$target is born in this town.\n");
-				}
+			case "player.join":
+					$this->data[$data->username] = new Config(DATA_PATH."/plugins/life/player/".$data->username.".yml", CONFIG_YAML, array(
+							'name' => $data->username,
+                            'age' => DEFAULT_AGE,
+							'gender' => DEFAULT_GEN,
+							'school' => DEFAULT_SCHOOL,
+							'married' => MARRIED_TO,
+							'like' => LIKE_SOMEONE,
+						));
 				break;
 				
 		case "player.growth":
