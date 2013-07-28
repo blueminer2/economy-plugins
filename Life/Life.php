@@ -34,7 +34,20 @@ class life implements Plugin{
 	public function __destruct(){
 	
 	}
-	
+	public function readConfig(){
+		$this->path = $this->api->plugin->createConfig($this, array(
+			"LifeSetting" => array(
+				 "enable" => false,
+			),
+		));
+		if(is_dir("./plugins/life/") === false){
+			mkdir("./plugins/life/");
+		}
+		if(is_dir("./plugins/life/player/") === false){
+			mkdir("./plugins/life/player/");
+		}
+	}
+
 	public function eventHandler($data, $event){
 	$output = "";
 	$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
@@ -467,11 +480,4 @@ class life implements Plugin{
 		}
 	}
 
-	private function overwriteConfig($dat)
-	{
-		$cfg = array();
-		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
-		$result = array_merge($cfg, $dat);
-		$this->api->plugin->writeYAML($this->path."config.yml", $result);
-	}
 }
