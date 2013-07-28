@@ -305,18 +305,36 @@ class life implements Plugin{
 					case "help":
 					$output .= "  ==[ :::Lists of All Availible Commands::: ]==\n";
 					$output .= "==[ ::Showing the Commands of {Life} Plugin:: ]==\n";
-					$output .= "[Life]/life age ++Shows how old you are\.n";
+					$output .= "[Life]/life me ++Shows your info\.n";
 					$output .= "[Life]/life job ++Shows availible jobs you can get.\n";
 					break;
-					case "age":
-					if(!array_key_exists($issuer->username, $cfg))
-						{
-							$output .= "[Life]You are not a villager./n";
-							break;
-						}
-						$age = $cfg[$issuer->username]['age'];
-						$output .= "[Life]$age years old\n";
+			case "me":
+				if($cfg[$issuer->username]->get("gender") === 0){
+					$output .= "[Life]Please select your gender!\n";
 						break;
+				}else if($cfg[$issuer->username]->get("married") === 0){
+					$gender = $cfg[$issuer->username]->get("gender");
+					$age = $cfg[$issuer->username]->get("age");
+					$school = $cfg[$issuer->username]->get("school");
+					$marry = $cfg[$issuer->username]->get("married");
+					$output .= "[Life]gender:$gender age:$age school:$school not married\n";
+					break;				
+				}else if($cfg[$issuer->username]->get("gender") === 2 and $cfg[$issuer->username]->get("married") !== 0){
+					$gender = $cfg[$issuer->username]->get("gender");
+					$age = $cfg[$issuer->username]->get("age");
+					$school = $cfg[$issuer->username]->get("school");
+					$marry = $cfg[$issuer->username]->get("married");
+					$output .= "[Life]gender:$gender age:$age school:$school husband:$marry\n";
+					break;
+				}else if($cfg[$issuer->username]->get("gender") === 1 and $cfg[$issuer->username]->get("married") !== 0){
+					$gender = $cfg[$issuer->username]->get("gender");
+					$age = $cfg[$issuer->username]->get("age");
+					$school = $cfg[$issuer->username]->get("school");
+					$marry = $cfg[$issuer->username]->get("married");
+					$output .= "[Life]gender:$gender age:$age school:$school wife:$marry\n";
+					break;
+				}
+				break;
 					case "jobs":
 					$playername = $issuer->username;
 					$jobs = $args[1];
