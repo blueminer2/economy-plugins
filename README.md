@@ -4,8 +4,11 @@ economy-plugins
 
 __Developers__
 
+      Omattyao
       Miner
-      Choco.M
+      Sekjun
       ChaosRuin
-      omattyao_yk
-      sekjun9878
+choco.M
+Miner
+===========
+===========
