@@ -447,7 +447,6 @@ class life implements Plugin{
 						$this->overwriteConfig($result);
 						$this->overwriteConfig($result2);
 						break;
-<<<<<<< HEAD
 			case "man":
 				if($cfg[$issuer->username]->get("gender") !== 0){
 					$output .= "[LifeEX]You have already selected your gender\n";
@@ -465,7 +464,6 @@ class life implements Plugin{
 				}else{
 					$cfg[$issuer->username]->set("gender", 2);
 					$output  .= "[Life]You selected woman.\n";
-=======
             case "woman":
 				if($cfg[$issuer->username]->get("gender") !== 0){
 					$output .= "[Life]You have already selected your gender\n";
@@ -483,23 +481,12 @@ class life implements Plugin{
 				}else{
 					$cfg[$issuer->username]->set("gender", 1);
 					$output  .= "[Life]You selected Man.\n";
->>>>>>> parent of 54d4908... Revert "More fixes for life plugin!"
 					break;
 				}
 					break;
-<<<<<<< HEAD
 				}
-<<<<<<< HEAD
-=======
-					break;
-				}
->>>>>>> parent of db1d0a7... bug fix
-=======
-				}
-					break;
-				}
->>>>>>> parent of db1d0a7... bug fix
 				break;
+				}
 		}
 		return $output;
 	}
