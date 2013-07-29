@@ -487,9 +487,15 @@ class life implements Plugin{
 					break;
 				}
 					break;
+<<<<<<< HEAD
 				}
 <<<<<<< HEAD
 =======
+					break;
+				}
+>>>>>>> parent of db1d0a7... bug fix
+=======
+				}
 					break;
 				}
 >>>>>>> parent of db1d0a7... bug fix
