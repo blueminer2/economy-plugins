@@ -484,9 +484,15 @@ class life implements Plugin{
 					break;
 				}
 					break;
+<<<<<<< HEAD
 				}
 				break;
+=======
+>>>>>>> parent of db1d0a7... bug fix
 				}
+					break;
+				}
+				break;
 		}
 		return $output;
 	}
