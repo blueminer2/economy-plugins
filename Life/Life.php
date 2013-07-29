@@ -10,7 +10,7 @@ apiversion=9
 */
 
 define("DEFAULT_AGE", 1);
-define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
+//define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
 define("DEFAULT_GEN", 0);//Man:1 Woman:2
 define("MARRIED_TO", 0); //if not married, it will be 0
 define("LIKE_SOMEONE", 0);//if set as "I don't want to marry" then it should be 0
@@ -23,9 +23,9 @@ class life implements Plugin{
 	
 	public function init(){
 		$this->api->addHandler("player.join", array($this, "eventHandler"));
-		$this->api->addHandler("player.spawn", array($this, "eventHandler"));
+		//$this->api->addHandler("player.spawn", array($this, "eventHandler"));
 		$this->api->addHandler("player.growth", array($this, "eventHandler"));
-		$this->api->addHandler("server.start", array($this, "eventHandler"));
+		//$this->api->addHandler("server.start", array($this, "eventHandler"));
 		$this->api->console->register("life", "command that handles most of your life", array($this, "handleCommand"));
 		$this->api->ban->cmdWhitelist("life");
 		$this->path = $this->api->plugin->createConfig($this, array());
@@ -39,14 +39,15 @@ class life implements Plugin{
 	$output = "";
 	$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 	switch($event){
-	    
+	    /*
 		case "player.spawn":
 					if($this->config->get("gender") === 0){
 					$data->sendChat("[Life]Please select your gender.\n/life <man/woman>\n");
 						break;
 					}
 					break;
-
+		*/
+		/*
 		case "server.start":
 		if(!file_exists("./plugins/PocketMoney.php"))
 		{
@@ -54,6 +55,7 @@ class life implements Plugin{
 			$cmd = "stop";
 			$this->api->block->commandHandler($cmd);
 		}
+		*/
 		case "player.join":
 		$target = $data->username;
 				if(!array_key_exists($target, $cfg))
@@ -82,6 +84,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age2);
+				$this->api->chat->broadcast("[Life]everyone became 2 years old");
 			}
 			if($this->api->time->get(30000))
 			{
@@ -92,6 +95,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age3);
+				$this->api->chat->broadcast("[Life]everyone became 3 years old");
 			}
 			if($this->api->time->get(40000))
 			{
@@ -102,6 +106,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age4);
+				$this->api->chat->broadcast("[Life]everyone became 4 years old");
 			}
 			if($this->api->time->get(50000))
 			{
@@ -112,6 +117,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age5);
+				$this->api->chat->broadcast("[Life]everyone became 5 years old");
 			}
 			if($this->api->time->get(60000))
 			{
@@ -122,6 +128,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age6);
+				$this->api->chat->broadcast("[Life]everyone became 6 years old");
 			}
 			if($this->api->time->get(70000))
 			{
@@ -132,6 +139,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age7);
+				$this->api->chat->broadcast("[Life]everyone became 7 years old");
 			}
 			if($this->api->time->get(80000))
 			{
@@ -142,6 +150,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age8);
+				$this->api->chat->broadcast("[Life]everyone became 8 years old");
 			}
 			if($this->api->time->get(90000))
 			{
@@ -152,6 +161,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age9);
+				$this->api->chat->broadcast("[Life]everyone became 9 years old");
 			}
 			if($this->api->time->get(100000))
 			{
@@ -162,6 +172,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age10);
+				$this->api->chat->broadcast("[Life]everyone became 10 years old");
 			}
 			if($this->api->time->get(110000))
 			{
@@ -172,6 +183,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age11);
+				$this->api->chat->broadcast("[Life]everyone became 11 years old");
 			}
 			if($this->api->time->get(120000))
 			{
@@ -182,6 +194,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age12);
+				$this->api->chat->broadcast("[Life]everyone became 12 years old");
 			}
 			if($this->api->time->get(130000))
 			{
@@ -192,6 +205,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age13);
+				$this->api->chat->broadcast("[Life]everyone became 13 years old");
 			}
 			if($this->api->time->get(140000))
 			{
@@ -202,6 +216,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age14);
+				$this->api->chat->broadcast("[Life]everyone became 14 years old");
 			}
 			if($this->api->time->get(150000))
 			{
@@ -212,6 +227,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age15);
+				$this->api->chat->broadcast("[Life]everyone became 15 years old");
 			}
 			if($this->api->time->get(160000))
 			{
@@ -222,6 +238,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age16);
+				$this->api->chat->broadcast("[Life]everyone became 16 years old");
 			}
 			if($this->api->time->get(170000))
 			{
@@ -232,6 +249,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age17);
+				$this->api->chat->broadcast("[Life]everyone became 17 years old");
 			}
 			if($this->api->time->get(180000))
 			{
@@ -242,6 +260,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age18);
+				$this->api->chat->broadcast("[Life]everyone became 18 years old");
 			}
 			if($this->api->time->get(190000))
 			{
@@ -252,6 +271,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age19);
+				$this->api->chat->broadcast("[Life]everyone became 19 years old");
 			}
 			if($this->api->time->get(200000))
 			{
@@ -262,6 +282,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age20);
+				$this->api->chat->broadcast("[Life]everyone became 20 years old");
 			}
 			if($this->api->time->get(250000))
 			{
@@ -272,6 +293,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age25);
+				$this->api->chat->broadcast("[Life]everyone became 25 years old");
 			}
 			if($this->api->time->get(300000))
 			{
@@ -282,6 +304,7 @@ class life implements Plugin{
 								)
 						);
 				$this->overwriteConfig($age30);
+				$this->api->chat->broadcast("[Life]everyone became 30 years old");
 			}
 		break;
 		}
@@ -362,13 +385,13 @@ class life implements Plugin{
 						{
 							$output .= "[Life]You or your bride is too young to marry each other\n";
 						}
-						if(!$cfg[$issuer]->get('like') = $target or !$cfg[$target]->get('like') = $issuer)
+						if(!$cfg[$issuer]['like'] = $target or !$cfg[$target]['like'] = $issuer)
 						{
-							if($cfg[$target]->get('like') = 1)
+							if($cfg[$target]['like'] = 1)
 							{
 								$output .= "[Life]He doesn't like you\n";
 							}
-							if($cfg[$target]->get('like') = 2)
+							if($cfg[$target]['like'] = 2)
 							{
 								$output .= "[Life]She doesn't like you\n";
 							}
@@ -423,21 +446,32 @@ class life implements Plugin{
 						$this->overwriteConfig($result2);
 						break;
             case "woman":
-				if($cfg[$issuer->username]->get("gender") !== 0){
+				if($cfg[$issuer->username]["gender"] != 0){
 					$output .= "[Life]You already selected your gender\n";
 					break;					
 				}else{
-					$cfg[$issuer->username]->set("gender", 2);
+					$ret = array(
+							$issuer => array(
+									"gender" => 2
+							),
+					);
+					$this->overwriteConfig($ret);
 					$output  .= "[Life] You selected Woman\n";
 					break;
 				}
 				break;
 			case "man":
-				if($cfg[$issuer->username]->get("gender") !== 0){
+				if($cfg[$issuer->username]["gender"] != 0){
 					$output .= "[Life]You already selected your gender\n";
 					break;					
 				}else{
-					$cfg[$issuer->username]->set("gender", 1);
+					
+					$ret1 = array(
+							$issuer => array(
+									"gender" => 1
+							),
+					);
+					$this->overwriteConfig($ret1);
 					$output  .= "[Life]You selected Man.\n";
 					break;
 				}
