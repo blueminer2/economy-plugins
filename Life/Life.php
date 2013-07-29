@@ -34,20 +34,7 @@ class life implements Plugin{
 	public function __destruct(){
 	
 	}
-	public function readConfig(){
-		$this->path = $this->api->plugin->createConfig($this, array(
-			"LifeSetting" => array(
-				 "enable" => false,
-			),
-		));
-		if(is_dir("./plugins/life/") === false){
-			mkdir("./plugins/life/");
-		}
-		if(is_dir("./plugins/life/player/") === false){
-			mkdir("./plugins/life/player/");
-		}
-	}
-
+	
 	public function eventHandler($data, $event){
 	$output = "";
 	$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
@@ -67,15 +54,21 @@ class life implements Plugin{
 			$cmd = "stop";
 			$this->api->block->commandHandler($cmd);
 		}
-			case "player.join":
-					$this->data[$data->username] = new Config(DATA_PATH."/plugins/life/player/".$data->username.".yml", CONFIG_YAML, array(
-							'name' => $data->username,
-							'age' => DEFAULT_AGE,
-							'gender' => DEFAULT_GEN,
-							'school' => DEFAULT_SCHOOL,
-							'married' => MARRIED_TO,
-							'like' => LIKE_SOMEONE,
-						));
+		case "player.join":
+		$target = $data->username;
+				if(!array_key_exists($target, $cfg))
+				{
+					$this->api->plugin->createConfig($this,array(
+							$target => array(
+									'age' => DEFAULT_AGE,
+									'gender' => DEFAULT_GEN,
+									'school' => DEFAULT_SCHOOL,
+									'married' => MARRIED_TO,
+									'like' => LIKE_SOMEONE,
+							)
+					));
+					$this->api->chat->broadcast("[Life]$target is born in this town.\n");
+				}
 				break;
 				
 		case "player.growth":
@@ -305,36 +298,18 @@ class life implements Plugin{
 					case "help":
 					$output .= "  ==[ :::Lists of All Availible Commands::: ]==\n";
 					$output .= "==[ ::Showing the Commands of {Life} Plugin:: ]==\n";
-					$output .= "[Life]/life me ++Shows your info\.n";
+					$output .= "[Life]/life age ++Shows how old you are\.n";
 					$output .= "[Life]/life job ++Shows availible jobs you can get.\n";
 					break;
-			case "me":
-				if($cfg[$issuer->username]->get("gender") === 0){
-					$output .= "[Life]Please select your gender!\n";
+					case "age":
+					if(!array_key_exists($issuer->username, $cfg))
+						{
+							$output .= "[Life]You are not a villager./n";
+							break;
+						}
+						$age = $cfg[$issuer->username]['age'];
+						$output .= "[Life]$age years old\n";
 						break;
-				}else if($cfg[$issuer->username]->get("married") === 0){
-					$gender = $cfg[$issuer->username]->get("gender");
-					$age = $cfg[$issuer->username]->get("age");
-					$school = $cfg[$issuer->username]->get("school");
-					$marry = $cfg[$issuer->username]->get("married");
-					$output .= "[Life]gender:$gender age:$age school:$school not married\n";
-					break;				
-				}else if($cfg[$issuer->username]->get("gender") === 2 and $cfg[$issuer->username]->get("married") !== 0){
-					$gender = $cfg[$issuer->username]->get("gender");
-					$age = $cfg[$issuer->username]->get("age");
-					$school = $cfg[$issuer->username]->get("school");
-					$marry = $cfg[$issuer->username]->get("married");
-					$output .= "[Life]gender:$gender age:$age school:$school husband:$marry\n";
-					break;
-				}else if($cfg[$issuer->username]->get("gender") === 1 and $cfg[$issuer->username]->get("married") !== 0){
-					$gender = $cfg[$issuer->username]->get("gender");
-					$age = $cfg[$issuer->username]->get("age");
-					$school = $cfg[$issuer->username]->get("school");
-					$marry = $cfg[$issuer->username]->get("married");
-					$output .= "[Life]gender:$gender age:$age school:$school wife:$marry\n";
-					break;
-				}
-				break;
 					case "jobs":
 					$playername = $issuer->username;
 					$jobs = $args[1];
@@ -447,26 +422,9 @@ class life implements Plugin{
 						$this->overwriteConfig($result);
 						$this->overwriteConfig($result2);
 						break;
-			case "man":
-				if($cfg[$issuer->username]->get("gender") !== 0){
-					$output .= "[LifeEX]You have already selected your gender\n";
-					break;					
-				}else{
-					$cfg[$issuer->username]->set("gender", 1);
-					$output  .= "[Life]You selected man.\n";
-					break;
-				}
-					break;			
-			case "woman":
-				if($cfg[$issuer->username]->get("gender") !== 0){
-					$output .= "[Life]You have already selected your gender\n";
-					break;					
-				}else{
-					$cfg[$issuer->username]->set("gender", 2);
-					$output  .= "[Life]You selected woman.\n";
             case "woman":
 				if($cfg[$issuer->username]->get("gender") !== 0){
-					$output .= "[Life]You have already selected your gender\n";
+					$output .= "[Life]You already selected your gender\n";
 					break;					
 				}else{
 					$cfg[$issuer->username]->set("gender", 2);
@@ -476,7 +434,7 @@ class life implements Plugin{
 				break;
 			case "man":
 				if($cfg[$issuer->username]->get("gender") !== 0){
-					$output .= "[Life]You have already selected your gender\n";
+					$output .= "[Life]You already selected your gender\n";
 					break;					
 				}else{
 					$cfg[$issuer->username]->set("gender", 1);
@@ -484,11 +442,6 @@ class life implements Plugin{
 					break;
 				}
 					break;
-<<<<<<< HEAD
-				}
-				break;
-=======
->>>>>>> parent of db1d0a7... bug fix
 				}
 					break;
 				}
@@ -522,4 +475,11 @@ class life implements Plugin{
 		}
 	}
 
+	private function overwriteConfig($dat)
+	{
+		$cfg = array();
+		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
+		$result = array_merge($cfg, $dat);
+		$this->api->plugin->writeYAML($this->path."config.yml", $result);
+	}
 }
