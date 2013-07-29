@@ -443,8 +443,6 @@ class life implements Plugin{
 				}
 					break;
 				}
-					break;
-				}
 				break;
 		}
 		return $output;
