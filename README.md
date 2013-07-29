@@ -5,10 +5,7 @@ economy-plugins
 __Developers__
 
       Omattyao
-      Miner
+      choco.M
+      Ne_ko(miner)
       Sekjun
       ChaosRuin
-choco.M
-Miner
-===========
-===========
