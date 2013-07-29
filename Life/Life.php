@@ -486,8 +486,13 @@ class life implements Plugin{
 >>>>>>> parent of 54d4908... Revert "More fixes for life plugin!"
 					break;
 				}
-				break;
+					break;
 				}
+<<<<<<< HEAD
+=======
+					break;
+				}
+>>>>>>> parent of db1d0a7... bug fix
 				break;
 		}
 		return $output;
