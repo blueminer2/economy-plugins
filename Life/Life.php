@@ -10,7 +10,7 @@ apiversion=9
 */
 
 define("DEFAULT_AGE", 1);
-//define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
+define("DEHAULT_SCHOOL", 0);//None:0 Kindergarten:1 Elementary:2 Middle:3 High:4 University:5
 define("DEFAULT_GEN", 0);//Man:1 Woman:2
 define("MARRIED_TO", 0); //if not married, it will be 0
 define("LIKE_SOMEONE", 0);//if set as "I don't want to marry" then it should be 0
@@ -25,7 +25,7 @@ class life implements Plugin{
 		$this->api->addHandler("player.join", array($this, "eventHandler"));
 		//$this->api->addHandler("player.spawn", array($this, "eventHandler"));
 		$this->api->addHandler("player.growth", array($this, "eventHandler"));
-		//$this->api->addHandler("server.start", array($this, "eventHandler"));
+		$this->api->addHandler("school.pay", array($this, "eventHandler"));
 		$this->api->console->register("life", "command that handles most of your life", array($this, "handleCommand"));
 		$this->api->ban->cmdWhitelist("life");
 		$this->path = $this->api->plugin->createConfig($this, array());
@@ -38,6 +38,10 @@ class life implements Plugin{
 	public function eventHandler($data, $event){
 	$output = "";
 	$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
+	$target = $data->username;
+	$playername = $data['player']->username;
+	$bank = $this->api->plugin->readYAML("./plugins/bank/config.yml");
+	$playerbm = $bank[$playername]['bank'];
 	switch($event){
 	    /*
 		case "player.spawn":
@@ -47,17 +51,102 @@ class life implements Plugin{
 					}
 					break;
 		*/
-		/*
-		case "server.start":
-		if(!file_exists("./plugins/PocketMoney.php"))
+		case "school.pay":
+		if($cfg[$playername]['age'] = 5 and $cfg[$playername]['school'] = 1)
 		{
-			console("[Life]No PocketMoney!!!");
-			$cmd = "stop";
-			$this->api->block->commandHandler($cmd);
+			$cost5 = $playerbm%5;
+			$reto5 = array(
+					$bank[$playername]['bank'] -= $cost5
+			);
+			$output .= "[Bank] $cost5 Decreased from your bank account \n";
+			$this->overwriteConfig($reto5);
+			break;
 		}
-		*/
+		if($cfg[$playername]['age'] = 6 and $cfg[$playername]['school'] = 1)
+		{
+			$cost6 = $playerbm%6;
+			$reto5 = array(
+					$bank[$playername]['bank'] -= $cost6
+			);
+			$output .= "[Bank] $cost6 Decreased from your bank account \n";
+			$this->overwriteConfig($reto6);
+			break;
+		}
+		if($cfg[$playername]['age'] = 7 and $cfg[$playername]['school'] = 1)
+		{
+			$cost7 = $playerbm%7;
+			$reto7 = array(
+					$bank[$playername]['bank'] -= $cost7
+			);
+			$output .= "[Bank] $cost7 Decreased from your bank account \n";
+			$this->overwriteConfig($reto7);
+			break;
+		}
+		if($cfg[$playername]['age'] = 8 and $cfg[$playername]['school'] = 2)
+		{
+			$cost8 = $playerbm%8;
+			$reto8 = array(
+					$bank[$playername]['bank'] -= $cost8
+			);
+			$output .= "[Bank] $cost8 Decreased from your bank account \n";
+			$this->overwriteConfig($reto8);
+			break;
+		}
+		if($cfg[$playername]['age'] = 9 and $cfg[$playername]['school'] = 2)
+		{
+			$cost9 = $playerbm%9;
+			$reto9 = array(
+					$bank[$playername]['bank'] -= $cost9
+			);
+			$output .= "[Bank] $cost9 Decreased from your bank account \n";
+			$this->overwriteConfig($reto9);
+			break;
+		}
+		if($cfg[$playername]['age'] = 10 and $cfg[$playername]['school'] = 2)
+		{
+			$num1 = 1%2 + 9;
+			$cost10 = $playerbm%$num1;
+			$reto10 = array(
+					$bank[$playername]['bank'] -= $cost10
+			);
+			$output .= "[Bank] $cost10 Decreased from your bank account \n";
+			$this->overwriteConfig($reto10);
+			break;
+		}
+		if($cfg[$playername]['age'] = 11 and $cfg[$playername]['school'] = 2)
+		{
+			$num2 = 10;
+			$cost11 = $playerbm%$num2;
+			$reto11 = array(
+					$bank[$playername]['bank'] -= $cost11
+			);
+			$output .= "[Bank] $cost11 Decreased from your bank account \n";
+			$this->overwriteConfig($reto11);
+			break;
+		}
+		if($cfg[$playername]['age'] = 12 and $cfg[$playername]['school'] = 2)
+		{
+			$num3 = 1%2 + 10;
+			$cost12 = $playerbm%$num3;
+			$reto12 = array(
+					$bank[$playername]['bank'] -= $cost12
+			);
+			$output .= "[Bank] $cost12 Decreased from your bank account \n";
+			$this->overwriteConfig($reto12);
+			break;
+		}
+		if($cfg[$playername]['age'] = 13 and $cfg[$playername]['school'] =2)
+		{
+			$num4 = 12;
+			$cost13 = $playerbm%$num4;
+			$reto13 = array(
+					$bank[$playername]['bank'] -= $cost13
+			);
+			$output .= "[Bank] $cost13 Decreased from your bank account \n";
+			$this->overwriteConfig($reto13);
+			break;
+		}
 		case "player.join":
-		$target = $data->username;
 				if(!array_key_exists($target, $cfg))
 				{
 					$this->api->plugin->createConfig($this,array(
@@ -319,10 +408,10 @@ class life implements Plugin{
 				switch($subCommand){
 					case "":
 					case "help":
-					$output .= "  ==[ :::Lists of All Availible Commands::: ]==\n";
-					$output .= "==[ ::Showing the Commands of {Life} Plugin:: ]==\n";
-					$output .= "[Life]/life age ++Shows how old you are\.n";
-					$output .= "[Life]/life job ++Shows availible jobs you can get.\n";
+					$output .= "  ==[ :::Lists of All Availible Commands::: ]== \n";
+					$output .= "==[ ::Showing the Commands of {Life} Plugin:: ]== \n";
+					$output .= "[Life]/life age ++Shows how old you are \n";
+					$output .= "[Life]/life job ++Shows availible jobs you can get \n";
 					break;
 					case "age":
 					if(!array_key_exists($issuer->username, $cfg))
@@ -476,6 +565,50 @@ class life implements Plugin{
 					break;
 				}
 					break;
+				}
+				case "school":
+				$plage = $cfg[$issuer->username]['age'];
+				$school = $cfg[$issuer->username]['school'];
+				if(!$issuer instanceof Player)
+				{
+					$output .= "Run this command in-game\n";
+				}
+				if($school != 0)
+				{
+					$output .= "[Life]You are already in school\n";
+				}
+				if($plage <= 4)
+				{
+					$output .= "[Life]You are too young to go to school \n";
+				}
+				if($plage >= 25)
+				{
+					$output .= "[Life]Your are too old to go to school \n";
+				}
+				if(!file_exists("./plugins/bank/config.yml"))
+				{
+					$output .= "[Life]Bank plugin is not loaded \n";
+				}
+				$schinput = $args[1];
+				if($plage >= 5 and $plage <= 7)
+				{
+					$out = array(
+							$issuer => array(
+									"school" => 1
+							),
+					);
+					$this->overwriteConfig($out);
+					$output .= "[Life]You are now Kindergarden!! \n";
+				}
+				if($plage >=8 and $plage <=15)
+				{
+					$out2 = array(
+							$issuer => array(
+									"school" =>2
+							),
+					);
+					$this->overwriteConfig($out2);
+					$output .= "[Life]You are now Elementary schooler \n";
 				}
 				break;
 		}
