@@ -2,7 +2,7 @@
 
 /*
 __PocketMine Plugin__
-name=Life
+name=Life - lite
 version=0.0.2
 author=miner&omattyao&chaosruin
 class=life
@@ -142,7 +142,7 @@ class life implements Plugin{
 			$output .= "[Bank] $cost12 Decreased from your bank account \n";
 			break;
 		}
-		if($cfg[$playername]['age'] = 13 and $cfg[$playername]['school'] =2)
+		if($cfg[$playername]['age'] = 13 and $cfg[$playername]['school'] = 2)
 		{
 			$num4 = 12;
 			$cost13 = $playerbm%$num4;
@@ -608,7 +608,7 @@ class life implements Plugin{
 					$this->overwriteConfig($out);
 					$output .= "[Life]You are now Kindergarden!! \n";
 				}
-				if($plage >=8 and $plage <=15)
+				if($plage >=8 and $plage <=13)
 				{
 					$out2 = array(
 							$issuer => array(
@@ -618,6 +618,19 @@ class life implements Plugin{
 					$this->overwriteConfig($out2);
 					$output .= "[Life]You are now Elementary schooler \n";
 				}
+				if($plage >= 14 and $plage <=16)
+				{
+					$output .= "[Life]This feature is implemented in the pro version \n";
+					$output .= "[Life]/pro to see more features in the pro version \n";
+				}
+				break;
+				case "pro":
+				$output .= "[showing All features]. \n";
+				$output .= "나온 학교가 더 높을수록 월급을 더 많이 받습니다. \n";
+				$output .= "세금기능으로 더 재미있는 경제시스템을즐길수있습니다. \n";
+				$output .= "아기 (NPC)를 낳을수있습니다. \n";
+				$output .= "오픈소스입니다!!!!!. \n";
+				$output .= "직업이 엄청나게많고 자주 업데이트 됩니다!!. \n";
 				break;
 		}
 		return $output;
