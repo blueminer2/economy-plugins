@@ -38,7 +38,6 @@ class life implements Plugin{
 	public function eventHandler($data, $event){
 	$output = "";
 	$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
-	$target = $data->username;
 	$playername = $data['player']->username;
 	$playerbm = $this->api->dhandle("bank.player.get", array('username' => $username));
 	switch($event){
@@ -155,6 +154,7 @@ class life implements Plugin{
 			break;
 		}
 		case "player.join":
+				$target = $data->username;
 				if(!array_key_exists($target, $cfg))
 				{
 					$this->api->plugin->createConfig($this,array(
@@ -163,7 +163,7 @@ class life implements Plugin{
 									'gender' => DEFAULT_GEN,
 									'school' => DEFAULT_SCHOOL,
 									'married' => MARRIED_TO,
-									'like' => LIKE_SOMEONE,
+									'like' => LIKE_SOMEONE
 							)
 					));
 					$this->api->chat->broadcast("[Life]$target is born in this town.\n");
