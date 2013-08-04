@@ -40,8 +40,7 @@ class life implements Plugin{
 	$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 	$target = $data->username;
 	$playername = $data['player']->username;
-	$bank = $this->api->plugin->readYAML("./plugins/bank/config.yml");
-	$playerbm = $bank[$playername]['bank'];
+	$playerbm = $this->api->dhandle("bank.player.get", array('username' => $username));
 	switch($event){
 	    /*
 		case "player.spawn":
@@ -55,95 +54,104 @@ class life implements Plugin{
 		if($cfg[$playername]['age'] = 5 and $cfg[$playername]['school'] = 1)
 		{
 			$cost5 = $playerbm%5;
-			$reto5 = array(
-					$bank[$playername]['bank'] -= $cost5
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost5
+								));
 			$output .= "[Bank] $cost5 Decreased from your bank account \n";
-			$this->overwriteConfig($reto5);
 			break;
 		}
 		if($cfg[$playername]['age'] = 6 and $cfg[$playername]['school'] = 1)
 		{
 			$cost6 = $playerbm%6;
-			$reto5 = array(
-					$bank[$playername]['bank'] -= $cost6
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost6
+								));
 			$output .= "[Bank] $cost6 Decreased from your bank account \n";
-			$this->overwriteConfig($reto6);
 			break;
 		}
 		if($cfg[$playername]['age'] = 7 and $cfg[$playername]['school'] = 1)
 		{
 			$cost7 = $playerbm%7;
-			$reto7 = array(
-					$bank[$playername]['bank'] -= $cost7
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost7
+								));
 			$output .= "[Bank] $cost7 Decreased from your bank account \n";
-			$this->overwriteConfig($reto7);
 			break;
 		}
 		if($cfg[$playername]['age'] = 8 and $cfg[$playername]['school'] = 2)
 		{
 			$cost8 = $playerbm%8;
-			$reto8 = array(
-					$bank[$playername]['bank'] -= $cost8
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost8
+								));
 			$output .= "[Bank] $cost8 Decreased from your bank account \n";
-			$this->overwriteConfig($reto8);
 			break;
 		}
 		if($cfg[$playername]['age'] = 9 and $cfg[$playername]['school'] = 2)
 		{
 			$cost9 = $playerbm%9;
-			$reto9 = array(
-					$bank[$playername]['bank'] -= $cost9
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost9
+								));
 			$output .= "[Bank] $cost9 Decreased from your bank account \n";
-			$this->overwriteConfig($reto9);
 			break;
 		}
 		if($cfg[$playername]['age'] = 10 and $cfg[$playername]['school'] = 2)
 		{
 			$num1 = 1%2 + 9;
 			$cost10 = $playerbm%$num1;
-			$reto10 = array(
-					$bank[$playername]['bank'] -= $cost10
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost10
+								));
 			$output .= "[Bank] $cost10 Decreased from your bank account \n";
-			$this->overwriteConfig($reto10);
 			break;
 		}
 		if($cfg[$playername]['age'] = 11 and $cfg[$playername]['school'] = 2)
 		{
 			$num2 = 10;
 			$cost11 = $playerbm%$num2;
-			$reto11 = array(
-					$bank[$playername]['bank'] -= $cost11
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost11
+								));
 			$output .= "[Bank] $cost11 Decreased from your bank account \n";
-			$this->overwriteConfig($reto11);
 			break;
 		}
 		if($cfg[$playername]['age'] = 12 and $cfg[$playername]['school'] = 2)
 		{
 			$num3 = 1%2 + 10;
 			$cost12 = $playerbm%$num3;
-			$reto12 = array(
-					$bank[$playername]['bank'] -= $cost12
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost12
+								));
 			$output .= "[Bank] $cost12 Decreased from your bank account \n";
-			$this->overwriteConfig($reto12);
 			break;
 		}
 		if($cfg[$playername]['age'] = 13 and $cfg[$playername]['school'] =2)
 		{
 			$num4 = 12;
 			$cost13 = $playerbm%$num4;
-			$reto13 = array(
-					$bank[$playername]['bank'] -= $cost13
-			);
+						$this->api->dhandle("bank.handle", array(
+										'username' => $playername,
+										'method' => 'grant',
+										'amount' => $cost13
+								));
 			$output .= "[Bank] $cost13 Decreased from your bank account \n";
-			$this->overwriteConfig($reto13);
 			break;
 		}
 		case "player.join":
@@ -645,6 +653,6 @@ class life implements Plugin{
 		$cfg = array();
 		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
 		$result = array_merge($cfg, $dat);
-		$this->api->plugin->writeYAML($this->path."config.yml", $result);
+		$this->api->plugin->writeYAML($this->path ."config.yml", $result);
 	}
 }
