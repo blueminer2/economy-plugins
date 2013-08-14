@@ -4,7 +4,7 @@
 __PocketMine Plugin__
 name=PMconomy
 version=0.0.1
-author=miner
+author=miner/AndKmh/KsyMC/Omattyao
 class=PMC
 apiversion=9
 */
