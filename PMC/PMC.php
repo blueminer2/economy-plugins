@@ -3,7 +3,7 @@
 /*
 __PocketMine Plugin__
 name=PMconomy
-version=0.0.1
+version=0.0.2
 author=miner/AndKmh/KsyMC/Omattyao
 class=PMC
 apiversion=9
@@ -343,32 +343,64 @@ class PMC implements Plugin{
 		public function minuteSchedule()
 	{
 		$cfg = $this->api->plugin->readYAML($this->path . "config.yml");
-		$target2 = $this->api->player->get(username);
-		$returned = $cfg[$target2];
+		$target2 = $data->username;
 		$this->minute--;
 		if($cfg[$target2]["point - on/off"] = 0)
 		{
-			if($this->minute += 2)
+			if($this->minute += 12)
 			{
 				$amts = $cfg[$taret2]['bank'] % 1000;
-				$finalreturned = array(
-						$returned => array(
+			foreach($this->api->player->online() as $user) 	
+			{
+				$data = array('username' => $user);
+    		    $finalreturned = array(
+						$user => array(
 								'point' + $amts
 						)
 				);
 				$this->overwriteConfig($finalreturned);
 			}
+			}
 		}
-		if($this->minute += 5)
+		if($this->minute += 25)
 		{
-			$amts2 = $cfg[$target2]['bank'] % 500;
-			$finalreturned2 = array(
-					$returned => array(
-							'point' + $amts2
-					)
-			);
-			$this->overwriteConfig($finalreturned2);
+			foreach($this->api->player->online() as $user) 	
+			{
+			$data = array('username' => $user);
+			$rere = ($cfg[$user]['bank'] = $tax1)/500;
+			$this->api->dhandle("bank.handle", array(
+					'username' => $user,
+					'method' => 'grant',
+					'amount' => $rere));
 			$this->api->chat->broadcast("[PMC]" .$this->servname. "'s players' bank credit went up!!");
+			}
+		}
+		if($this->minute += 10)
+		{
+			$tax = rand(1,30);
+			foreach($this->api->player->online() as $user) 	
+			{
+			$data = array('username' => $user);
+    	    $resss = ($cfg[$user]['bank'] * $tax)/100;
+			$this->api->dhandle("bank.handle", array(
+					'username' => $user,
+					'method' => 'grant',
+					'amount' => -$resss));
+			}
+		}
+		if($this->minute += 10)
+		{
+			$tax = rand(1,30);
+			foreach($this->api->player->online() as $user) 	
+			{
+			$data = array('username' => $user);
+			$money = $this->api->dhandle("money.player.get", $data);
+    	    $result = ($money*$tax)/100;
+			$this->api->dhandle("money.handle", array(
+					'username' => $user,
+					'method' => 'grant',
+					'amount' => -$result));
+			}
 		}
 	}
 	
